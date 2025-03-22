@@ -30,9 +30,9 @@ export const imageSchema = zod.instanceof(File).nullable().superRefine((file, ct
     }
 });
 
-export const uploadImagechema= toTypedSchema(
+export const uploadImageSchema= toTypedSchema(
     zod.object({
         image:imageSchema,
-        label: zod.string().optional()
+        label: zod.string()
     })
 );

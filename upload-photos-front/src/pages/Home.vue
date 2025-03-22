@@ -1,34 +1,37 @@
 <script setup lang="ts">
-import {ref} from "vue";
 import {PhotoIcon} from '@heroicons/vue/24/solid'
 import axiosClient from "../axios.ts";
 import router from "../router.ts";
+import {useField, useForm} from "vee-validate";
+import {uploadImageSchema} from "../schemas/image.schemas.ts";
 
-interface FormData {
-  image:File | null;
-  label:string;
-}
 
-const data = ref<FormData>({
-  image: null,
-  label: ''
-})
+const {  handleSubmit ,setFieldValue} = useForm({
+  validationSchema: uploadImageSchema,
+});
+
+const { value: label } = useField('label');
+
 
 const handleUploadImage = (event:Event) =>{
   const target = event.target as HTMLInputElement;
   if(target && target.files){
-     data.value.image =target.files[0];
+    setFieldValue('image', target.files[0]);
   }
 }
-function submit(){
-  const formData = new FormData()
-  formData.append('image', data.value.image)
-  formData.append('label', data.value.label)
-  axiosClient.post('/api/image', formData)
-      .then(() => {
-        router.push({name: 'MyImages'})
-      })
-}
+
+const onSubmit = handleSubmit(values=>{
+  const {label,image} = values;
+  if(image){
+    const formData = new FormData()
+    formData.append('image', image)
+    formData.append('label', label)
+    axiosClient.post('/api/image', formData)
+        .then(() => {
+          router.push({name: 'MyImages'})
+        })
+  }
+});
 </script>
 
 <template>
@@ -41,7 +44,7 @@ function submit(){
   </header>
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <form @submit.prevent="submit">
+      <form @submit="onSubmit">
         <div class="mb-4">
           <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Image</label>
           <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -70,7 +73,7 @@ function submit(){
             <input type="text"
                    name="label"
                    id="label"
-                   v-model="data.label"
+                   v-model="label"
                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline -outline-offset-1 outline-gray-300
                     placeholder:text-gray-400 focus:outline focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
           </div>

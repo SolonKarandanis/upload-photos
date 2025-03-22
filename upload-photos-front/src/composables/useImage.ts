@@ -1,9 +1,11 @@
 import axiosClient from "../axios.ts";
 import {ref} from "vue";
 import router from "../router.ts";
+import type {Image} from "../models/image.model.ts";
 
 export function useImage(){
     const iLoading = ref(false);
+    const images = ref<Image[]>([]);
 
     const uploadImage = (values: {
         label: string
@@ -26,8 +28,36 @@ export function useImage(){
         }
     }
 
+    const fetchImages = () =>{
+        iLoading.value=true;
+        axiosClient.get('/api/image')
+            .then((response) => {
+                iLoading.value=false;
+                console.log(response.data);
+                images.value = response.data;
+            }).catch(error => {
+                iLoading.value=false;
+                console.log(error.response)
+            })
+    }
+
+    const deleteImage = (imageId:number)=>{
+        iLoading.value=true;
+        axiosClient.delete(`/api/image/${imageId}`)
+            .then(() => {
+                iLoading.value=false;
+                images.value = images.value.filter(image => image.id !== imageId)
+            }).catch(error => {
+                iLoading.value=false;
+                console.log(error.response)
+            })
+    }
+
     return {
         iLoading,
-        uploadImage
+        images,
+        uploadImage,
+        fetchImages,
+        deleteImage
     }
 }

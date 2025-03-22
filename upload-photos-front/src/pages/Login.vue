@@ -1,41 +1,26 @@
 <script setup lang="ts">
 import GuestLayout from "../components/GuestLayout.vue";
-import {ref} from "vue";
-import axiosClient from "../axios.ts";
-import router from "../router.ts";
 import {useField, useForm} from 'vee-validate';
 import {loginSchema} from "../schemas/auth.schemas.ts";
 import Error from "../components/Error.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
+import {useAuth} from "../composables/useAuth.ts";
 
 
 const {  handleSubmit, errors } = useForm({
   validationSchema: loginSchema,
 });
 
-const iLoading = ref(false);
+const {iLoading,errorMessage,login} = useAuth();
 
 
 const { value: email } = useField('email');
 const { value: password } = useField('password');
 
 const onSubmit = handleSubmit(values => {
-  iLoading.value=true;
-  axiosClient.get('/sanctum/csrf-cookie').then(() => {
-    axiosClient.post("/login",values)
-        .then(() => {
-          iLoading.value=false;
-          router.push({name: 'Home'})
-        })
-        .catch(error => {
-          iLoading.value=false;
-          console.log(error.response)
-          errorMessage.value = error.response.data.message;
-        })
-  });
+  login(values);
 });
 
-const errorMessage = ref('')
 </script>
 
 <template>

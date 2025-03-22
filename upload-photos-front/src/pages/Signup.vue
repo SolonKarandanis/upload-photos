@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import GuestLayout from "../components/GuestLayout.vue";
-import axiosClient from "../axios.ts";
-import router from "../router.ts";
 import {useField, useForm} from "vee-validate";
 import {registerSchema} from "../schemas/auth.schemas.ts";
 import Error from "../components/Error.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
-import {ref} from "vue";
+import {useAuth} from "../composables/useAuth.ts";
 
-const iLoading = ref(false);
+
+const {iLoading,register} = useAuth();
 
 const {  handleSubmit, errors } = useForm({
   validationSchema: registerSchema,
@@ -20,18 +19,7 @@ const { value: password } = useField('password');
 const { value: password_confirmation } = useField('password_confirmation');
 
 const onSubmit = handleSubmit(values =>{
-  iLoading.value=true;
-  axiosClient.get('/sanctum/csrf-cookie').then(() => {
-    axiosClient.post("/register", values)
-        .then(() => {
-          iLoading.value=false;
-          router.push({name: 'Home'})
-        })
-        .catch(error => {
-          iLoading.value=false;
-          console.log(error.response.data)
-        })
-  });
+  register(values);
 });
 </script>
 

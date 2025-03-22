@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import {PhotoIcon} from '@heroicons/vue/24/solid'
-import axiosClient from "../axios.ts";
-import router from "../router.ts";
 import {useField, useForm} from "vee-validate";
 import {uploadImageSchema} from "../schemas/image.schemas.ts";
+import {useImage} from "../composables/useImage.ts";
+import PrimaryButton from "../components/PrimaryButton.vue";
 
+
+const {uploadImage,iLoading} = useImage();
 
 const {  handleSubmit ,setFieldValue} = useForm({
   validationSchema: uploadImageSchema,
@@ -21,16 +23,7 @@ const handleUploadImage = (event:Event) =>{
 }
 
 const onSubmit = handleSubmit(values=>{
-  const {label,image} = values;
-  if(image){
-    const formData = new FormData()
-    formData.append('image', image)
-    formData.append('label', label)
-    axiosClient.post('/api/image', formData)
-        .then(() => {
-          router.push({name: 'MyImages'})
-        })
-  }
+  uploadImage(values);
 });
 </script>
 
@@ -78,11 +71,9 @@ const onSubmit = handleSubmit(values=>{
                     placeholder:text-gray-400 focus:outline focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
           </div>
         </div>
-        <button type="submit"
-                class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500
-                focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <PrimaryButton :loading="iLoading" >
           Upload
-        </button>
+        </PrimaryButton>
       </form>
     </div>
   </main>

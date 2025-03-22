@@ -60,7 +60,7 @@ const onSubmit = handleSubmit(values => {
           <Error :error="errors.password " />
         </div>
         <div>
-          <PrimaryButton label="" :loading="iLoading" >
+          <PrimaryButton :loading="iLoading" >
             Sign in
           </PrimaryButton>
         </div>

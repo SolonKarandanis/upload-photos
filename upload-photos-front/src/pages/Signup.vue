@@ -81,7 +81,7 @@ const onSubmit = handleSubmit(values =>{
           <Error :error="errors.password_confirmation " />
         </div>
         <div>
-          <PrimaryButton label="" :loading="iLoading" >
+          <PrimaryButton :loading="iLoading" >
             Create an Account
           </PrimaryButton>
         </div>

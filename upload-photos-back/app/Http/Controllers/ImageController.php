@@ -35,7 +35,7 @@ class ImageController extends Controller
             'label' => $request->label
         ]);
 
-        return response($image, 201);
+        return response(new ImageResource($image), 201);
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -13,15 +13,9 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return Image::latest()
-            ->get()
-            ->map(function ($image) {
-                return [
-                    'id' => $image->id,
-                    'url' => url(Storage::url($image->path)),
-                    'label' => $image->label,
-                ];
-            });
+        $images= Image::latest()
+            ->get();
+        return  ImageResource::collection($images);
     }
 
     /**

@@ -2,6 +2,8 @@ import axiosClient from "../axios.ts";
 import {ref} from "vue";
 import router from "../router.ts";
 import type {Image} from "../models/image.model.ts";
+import type {List} from "../models/search.model.ts";
+import type {AxiosResponse} from "axios";
 
 export function useImage(){
     const iLoading = ref(false);
@@ -31,10 +33,10 @@ export function useImage(){
     const fetchImages = () =>{
         iLoading.value=true;
         axiosClient.get('/api/image')
-            .then((response) => {
+            .then((response:AxiosResponse<List<Image>>) => {
                 iLoading.value=false;
                 console.log(response.data);
-                images.value = response.data;
+                images.value = response.data.data;
             }).catch(error => {
                 iLoading.value=false;
                 console.log(error.response)

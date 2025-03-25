@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [UserController::class,'show']);
+    Route::get('/user', [UserController::class,'getUserAccount']);
 
     Route::apiResource('/image', ImageController::class)
         ->only(['index', 'store', 'destroy']);
 
-    Route::apiResource('/categories', CategoriesController::class);
+    Route::apiResource('/categories', CategoriesController::class)
+        ->only(['index', 'store', 'update','destroy']);
 });
 
 

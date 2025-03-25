@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -11,15 +13,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $categories = Categories::all();
+        return response(CategoryResource::collection($categories),200);
     }
 
     /**
@@ -27,21 +22,21 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required|unique:categories', 'string', 'max:50'],
+        ]);
+
+        $category = Categories::create([
+            'name' => $request->name,
+        ]);
+
+        return response(new CategoryResource($category), 201);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
     {
         //
     }
@@ -57,8 +52,10 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Categories $category)
     {
-        //
+        $category->delete();
+
+        return response(null, 204);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show(Request $request)
+    public function getUserAccount(Request $request)
     {
         return new UserResource($request->user());
     }

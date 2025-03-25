@@ -15,7 +15,7 @@ class ImageController extends Controller
     {
         $images= Image::latest()
             ->get();
-        return  ImageResource::collection($images);
+        return  response(ImageResource::collection($images),200);
     }
 
     /**

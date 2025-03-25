@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Categories;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Categories $category)
     {
         //
     }
@@ -41,9 +42,11 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, Categories $category)
     {
-        //
+        $category->name= $request->name;
+        $category->save();
+        return response(new CategoryResource($category), 200);
     }
 
     /**

@@ -13,7 +13,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->only(['index', 'store', 'destroy']);
 
     Route::apiResource('/categories', CategoriesController::class)
-        ->only(['index', 'store', 'update','destroy']);
+        ->only(['index','show', 'store', 'update','destroy']);
 });
 
 

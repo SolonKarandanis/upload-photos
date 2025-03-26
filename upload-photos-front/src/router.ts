@@ -1,11 +1,15 @@
 import {createRouter, createWebHistory, type RouteRecordRaw} from "vue-router";
 import DefaultLayout from "./components/DefaultLayout.vue";
-import Home from "./pages/Home.vue";
-import MyImages from "./pages/MyImages.vue";
 import Login from "./pages/Login.vue";
 import Signup from "./pages/Signup.vue";
 import NotFound from "./pages/NotFound.vue";
 import useUserStore from "./store/user.ts";
+
+
+const Home = () => import('./pages/Home.vue');
+const MyImages = () => import('./pages/MyImages.vue');
+const CreateCategory = () => import('./pages/CreateCategory.vue');
+const Categories = () => import('./pages/Categories.vue');
 
 const routes:RouteRecordRaw[] =[
     {
@@ -21,6 +25,16 @@ const routes:RouteRecordRaw[] =[
                 path:'/images',
                 name:'MyImages',
                 component:MyImages
+            },
+            {
+                path:'/categories',
+                name:'Categories',
+                component:Categories
+            },
+            {
+                path:'/categories/create',
+                name:'CreateCategory',
+                component:CreateCategory
             }
         ],
         beforeEnter: async (_to, _from, next) => {

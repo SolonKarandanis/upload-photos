@@ -9,6 +9,8 @@ import {computed} from "vue";
 const navigation = [
   {name: 'Upload', to: {name: 'Home'}},
   {name: 'My Images', to: {name: 'MyImages'}},
+  {name: 'Create Category', to: {name: 'CreateCategory'}},
+  {name: 'Categories', to: {name: 'Categories'}},
 ]
 const userStore = useUserStore()
 //

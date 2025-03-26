@@ -1,9 +1,12 @@
 <script setup lang="ts">
 
+import Header from "../components/Header.vue";
 </script>
 
 <template>
-categories
+  <Header>
+    Categories
+  </Header>
 </template>
 
 <style scoped>

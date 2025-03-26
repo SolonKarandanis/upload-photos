@@ -4,6 +4,7 @@ import {useField, useForm} from "vee-validate";
 import {uploadImageSchema} from "../schemas/image.schemas.ts";
 import {useImage} from "../composables/useImage.ts";
 import PrimaryButton from "../components/PrimaryButton.vue";
+import Header from "../components/Header.vue";
 
 
 const {uploadImage,iLoading} = useImage();
@@ -28,13 +29,9 @@ const onSubmit = handleSubmit(values=>{
 </script>
 
 <template>
-  <header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-        Upload
-      </h1>
-    </div>
-  </header>
+  <Header>
+    Upload
+  </Header>
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <form @submit="onSubmit">

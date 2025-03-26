@@ -8,7 +8,7 @@ import useUserStore from "./store/user.ts";
 
 const Home = () => import('./pages/Home.vue');
 const MyImages = () => import('./pages/MyImages.vue');
-const CreateCategory = () => import('./pages/CreateCategory.vue');
+const SaveCategory = () => import('./pages/SaveCategory.vue');
 const Categories = () => import('./pages/Categories.vue');
 
 const routes:RouteRecordRaw[] =[
@@ -34,7 +34,7 @@ const routes:RouteRecordRaw[] =[
             {
                 path:'/categories/create',
                 name:'CreateCategory',
-                component:CreateCategory
+                component:SaveCategory
             }
         ],
         beforeEnter: async (_to, _from, next) => {

@@ -4,7 +4,14 @@ import Header from "../components/Header.vue";
 import {useCategory} from "../composables/useCategory.ts";
 import {onMounted} from "vue";
 
-const {fetchCategories,categories,iLoading} = useCategory();
+const {fetchCategories,deleteCategory,categories,iLoading} = useCategory();
+
+function onDelete(id:number){
+  if (!confirm("Are you sure you want to delete this Category?")) {
+    return;
+  }
+  deleteCategory(id);
+}
 
 onMounted(() => {
   fetchCategories();
@@ -35,8 +42,18 @@ onMounted(() => {
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {{category.name}}
               </th>
-              <td class="px-6 py-4 text-right">
-                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+              <td class="px-6 py-4 text-right flex justify-end gap-4">
+                <button type="submit"
+
+                        class="rounded-md bg-indigo-600 px-3 py-1 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Edit
+                </button>
+                <button type="submit"
+                        :disabled="iLoading"
+                        @click="onDelete(category.id)"
+                        class="rounded-md bg-red-600 px-3 py-1 text-sm/6 font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-red-700">
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>

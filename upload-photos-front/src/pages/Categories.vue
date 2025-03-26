@@ -44,7 +44,6 @@ onMounted(() => {
               </th>
               <td class="px-6 py-4 text-right flex justify-end gap-4">
                 <button type="submit"
-
                         class="rounded-md bg-indigo-600 px-3 py-1 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Edit
                 </button>

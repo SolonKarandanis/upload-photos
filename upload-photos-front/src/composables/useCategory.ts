@@ -44,8 +44,6 @@ export function useCategory(){
 
     const saveCategory=(values:{name: string},categoryId:number | null)=>{
         if(categoryId){
-            console.log('upd')
-
             updateCategory(values,categoryId);
         }
         else{

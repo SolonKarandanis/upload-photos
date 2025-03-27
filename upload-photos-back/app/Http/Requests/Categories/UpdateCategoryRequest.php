@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50','unique:categories'],
+            'name' => ['required', 'string', 'max:50',Rule::unique('categories')->ignore($this->route('category')->id)],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required'=>['The name field is required.'],
         ];
     }
 }

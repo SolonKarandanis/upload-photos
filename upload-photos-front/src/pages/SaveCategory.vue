@@ -67,7 +67,7 @@ watch(selectedCategory, (category)=>{
         </div>
         <div class="mt-3">
           <PrimaryButton :loading="iLoading">
-            Create Category
+            {{title}}
           </PrimaryButton>
         </div>
       </form>

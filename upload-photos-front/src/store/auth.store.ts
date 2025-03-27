@@ -3,22 +3,22 @@ import axiosClient from "../axios.ts";
 import type {User} from "../models/user.model.ts";
 
 interface State{
-    user:User |null
+    loggedInUser:User |null
 }
 
-const useUserStore = defineStore('user', {
+const useAuthStore = defineStore('user', {
     state: ():State => ({
-        user: null
+        loggedInUser: null
     }),
     actions: {
         fetchLoggedInUser() {
             return axiosClient.get('/api/user')
                 .then(({data}) => {
                     console.log(data)
-                    this.user = data
+                    this.loggedInUser = data
                 })
         }
     }
 })
 
-export default useUserStore;
+export default useAuthStore;

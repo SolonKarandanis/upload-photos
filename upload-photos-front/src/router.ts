@@ -3,7 +3,7 @@ import DefaultLayout from "./components/DefaultLayout.vue";
 import Login from "./pages/Login.vue";
 import Signup from "./pages/Signup.vue";
 import NotFound from "./pages/NotFound.vue";
-import useUserStore from "./store/user.ts";
+import useAuthStore from "./store/auth.store.ts";
 
 
 const Home = () => import('./pages/Home.vue');
@@ -44,8 +44,8 @@ const routes:RouteRecordRaw[] =[
         ],
         beforeEnter: async (_to, _from, next) => {
             try {
-                const userStore = useUserStore();
-                await userStore.fetchUser();
+                const authStore = useAuthStore();
+                await authStore.fetchLoggedInUser();
                 next();
             } catch (error) {
                 next(false); // Cancel navigation if data fetching fails

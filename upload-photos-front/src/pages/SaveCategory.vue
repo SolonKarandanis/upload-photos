@@ -5,7 +5,7 @@ import {createCategorySchema} from "../schemas/category.schemas.ts";
 import Error from "../components/Error.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
 import {useCategory} from "../composables/useCategory.ts";
-import {onMounted} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 
 const {
@@ -15,30 +15,36 @@ const {
   fetchCategory
 } = useCategory();
 
+const route = useRoute();
+const categoryId = route.params.id[0];
+const title = ref<string>('Create Category');
+
+onMounted(() => {
+  if(categoryId){
+    title.value= 'Update Category'
+    fetchCategory(Number(categoryId));
+  }
+})
+
 const {  handleSubmit ,errors} = useForm({
   validationSchema: createCategorySchema,
 });
 
-const { value: name } = useField('name');
+const { value: name ,setValue} = useField('name');
 
 const onSubmit = handleSubmit(values=>{
   createCategory(values);
 });
 
-const route = useRoute();
-
-onMounted(() => {
-  const categoryId = route.params.id[0];
-  if(categoryId){
-    fetchCategory(Number(categoryId));
-  }
-})
+watch(selectedCategory, (category)=>{
+  setValue(category?.name);
+});
 
 </script>
 
 <template>
   <Header>
-    Create Category
+    {{title}}
   </Header>
   <main>
     <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">

@@ -8,6 +8,7 @@ export function useCategory(){
     const iLoading = ref(false);
     const errorMessage = ref('');
     const categories = ref<Category[]>([]);
+    const selectedCategory = ref<Category|null>(null);
 
     const createCategory=(values:{name: string})=>{
         iLoading.value=true;
@@ -37,6 +38,18 @@ export function useCategory(){
             })
     }
 
+    const fetchCategory= (categoryId:number) =>{
+        iLoading.value=true;
+        axiosClient.get(`/api/categories/${categoryId}`)
+            .then((response:AxiosResponse<Category>)=>{
+                iLoading.value=false;
+                selectedCategory.value = response.data;
+            }).catch(error => {
+                iLoading.value=false;
+                console.log(error.response)
+            })
+    }
+
     const deleteCategory = (categoryId:number)=>{
         iLoading.value=true;
         axiosClient.delete(`/api/categories/${categoryId}`)
@@ -52,9 +65,11 @@ export function useCategory(){
     return {
         iLoading,
         categories,
+        selectedCategory,
         errorMessage,
         createCategory,
         fetchCategories,
         deleteCategory,
+        fetchCategory
     }
 }

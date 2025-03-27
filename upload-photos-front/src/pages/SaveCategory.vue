@@ -5,8 +5,15 @@ import {createCategorySchema} from "../schemas/category.schemas.ts";
 import Error from "../components/Error.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
 import {useCategory} from "../composables/useCategory.ts";
+import {onMounted} from "vue";
+import {useRoute} from "vue-router";
 
-const {createCategory,iLoading} = useCategory();
+const {
+  iLoading,
+  selectedCategory,
+  createCategory,
+  fetchCategory
+} = useCategory();
 
 const {  handleSubmit ,errors} = useForm({
   validationSchema: createCategorySchema,
@@ -17,6 +24,15 @@ const { value: name } = useField('name');
 const onSubmit = handleSubmit(values=>{
   createCategory(values);
 });
+
+const route = useRoute();
+
+onMounted(() => {
+  const categoryId = route.params.id[0];
+  if(categoryId){
+    fetchCategory(Number(categoryId));
+  }
+})
 
 </script>
 

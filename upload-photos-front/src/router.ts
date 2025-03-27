@@ -35,6 +35,11 @@ const routes:RouteRecordRaw[] =[
                 path:'/categories/create',
                 name:'CreateCategory',
                 component:SaveCategory
+            },
+            {
+                path:'/categories/:id',
+                name:'UpdateCategory',
+                component:SaveCategory
             }
         ],
         beforeEnter: async (_to, _from, next) => {

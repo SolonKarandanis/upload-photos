@@ -3,8 +3,10 @@ import type {Category} from "../models/category.model.ts";
 import axiosClient from "../axios.ts";
 import router from "../router.ts";
 import type {AxiosResponse} from "axios";
+import {useToast} from 'vue-toast-notification';
 
 export function useCategory(){
+    const toast = useToast();
     const iLoading = ref(false);
     const errorMessage = ref('');
     const categories = ref<Category[]>([]);
@@ -16,12 +18,14 @@ export function useCategory(){
             axiosClient.post("/api/categories",values)
                 .then(() => {
                     iLoading.value=false;
+                    toast.success('Category created');
                     router.push({name: 'Categories'})
                 })
                 .catch(error => {
                     iLoading.value=false;
                     console.log(error.response)
                     errorMessage.value = error.response.data.message;
+                    toast.error(error.response.data.message)
                 })
         });
     }
@@ -32,12 +36,14 @@ export function useCategory(){
             axiosClient.put(`/api/categories/${categoryId}`,values)
                 .then(() => {
                     iLoading.value=false;
+                    toast.success('Category updated');
                     router.push({name: 'Categories'})
                 })
                 .catch(error => {
                     iLoading.value=false;
                     console.log(error.response)
                     errorMessage.value = error.response.data.message;
+                    toast.error(error.response.data.message)
                 })
         });
     }
@@ -60,6 +66,7 @@ export function useCategory(){
             }).catch(error => {
                 iLoading.value=false;
                 console.log(error.response)
+                toast.error(error.response.data.message)
             })
     }
 
@@ -72,6 +79,7 @@ export function useCategory(){
             }).catch(error => {
                 iLoading.value=false;
                 console.log(error.response)
+                toast.error(error.response.data.message)
             })
     }
 
@@ -80,10 +88,12 @@ export function useCategory(){
         axiosClient.delete(`/api/categories/${categoryId}`)
             .then(() => {
                 iLoading.value=false;
+                toast.success('Category deleted');
                 categories.value = categories.value.filter(category => category.id !== categoryId)
             }).catch(error => {
                 iLoading.value=false;
                 console.log(error.response)
+                toast.error(error.response.data.message)
             })
     }
 

@@ -3,7 +3,7 @@ import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIte
 import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
 import axiosClient from "../axios.ts";
 import router from "../router.ts";
-import useUserStore from "../store/user.ts";
+import useUserStore from "../store/user.store.ts";
 import {computed} from "vue";
 
 const navigation = [

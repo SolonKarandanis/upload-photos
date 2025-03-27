@@ -50,4 +50,7 @@ export const useToastStore = defineStore("toast", {
             this.updateState(payload, "error");
         },
     },
+    getters:{
+        toasts: (state)=>state.toasts,
+    }
 });

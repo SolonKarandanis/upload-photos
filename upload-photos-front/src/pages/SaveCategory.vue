@@ -11,16 +11,19 @@ import {useRoute} from "vue-router";
 const {
   iLoading,
   selectedCategory,
-  createCategory,
+  errorMessage,
+  saveCategory,
   fetchCategory
 } = useCategory();
 
 const route = useRoute();
-const categoryId = route.params.id[0];
+let categoryId:number|null = null;
 const title = ref<string>('Create Category');
 
 onMounted(() => {
-  if(categoryId){
+  const params =route.params;
+  if(params.hasOwnProperty('id')){
+    categoryId=Number(params.id[0]);
     title.value= 'Update Category'
     fetchCategory(Number(categoryId));
   }
@@ -33,7 +36,7 @@ const {  handleSubmit ,errors} = useForm({
 const { value: name ,setValue} = useField('name');
 
 const onSubmit = handleSubmit(values=>{
-  createCategory(values);
+  saveCategory(values,categoryId);
 });
 
 watch(selectedCategory, (category)=>{

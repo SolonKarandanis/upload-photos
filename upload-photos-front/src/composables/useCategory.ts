@@ -26,6 +26,33 @@ export function useCategory(){
         });
     }
 
+    const updateCategory=(values:{name: string},categoryId:number)=>{
+        iLoading.value=true;
+        axiosClient.get('/sanctum/csrf-cookie').then(()=>{
+            axiosClient.put(`/api/categories/${categoryId}`,values)
+                .then(() => {
+                    iLoading.value=false;
+                    router.push({name: 'Categories'})
+                })
+                .catch(error => {
+                    iLoading.value=false;
+                    console.log(error.response)
+                    errorMessage.value = error.response.data.message;
+                })
+        });
+    }
+
+    const saveCategory=(values:{name: string},categoryId:number | null)=>{
+        if(categoryId){
+            console.log('upd')
+
+            updateCategory(values,categoryId);
+        }
+        else{
+            createCategory(values);
+        }
+    }
+
     const fetchCategories=()=>{
         iLoading.value=true;
         axiosClient.get('/api/categories')
@@ -67,7 +94,7 @@ export function useCategory(){
         categories,
         selectedCategory,
         errorMessage,
-        createCategory,
+        saveCategory,
         fetchCategories,
         deleteCategory,
         fetchCategory

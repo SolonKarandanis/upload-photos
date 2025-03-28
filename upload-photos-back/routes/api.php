@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -14,6 +14,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('/categories', CategoriesController::class)
         ->only(['index','show', 'store', 'update','destroy']);
+
+    Route::get('posts',[PostController::class,'getPosts']);
+    Route::get('posts/{slug}',[PostController::class,'getPostBySlug']);
+    Route::get('/client/posts',[PostController::class,'loadMorePost']);
+    Route::post('posts',[PostController::class,'store']);
+    Route::put('posts/{id}',[PostController::class,'update']);
+    Route::delete('posts/{id}',[PostController::class,'destroy']);
+    Route::post('posts/upload-image',[PostController::class,'addImage']);
 });
 
 

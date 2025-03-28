@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PostListResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *

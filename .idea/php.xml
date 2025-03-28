@@ -130,6 +130,8 @@
       <path value="$PROJECT_DIR$/upload-photos-back/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/upload-photos-back/vendor/laravel/breeze" />
       <path value="$PROJECT_DIR$/upload-photos-back/vendor/composer" />
+      <path value="$PROJECT_DIR$/upload-photos-back/vendor/barryvdh/laravel-ide-helper" />
+      <path value="$PROJECT_DIR$/upload-photos-back/vendor/barryvdh/reflection-docblock" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

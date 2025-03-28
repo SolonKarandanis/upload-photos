@@ -39,10 +39,10 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Posts $post)
     {
-
+//        $post->categories()->sync($request->categories); 3 queries
     }
 
-    public function generateSlug($title)
+    private function generateSlug($title)
     {
         $randomNumber = Str::random(6) . time();
         $slug = Str::slug($title). '-' . $randomNumber;
@@ -58,7 +58,7 @@ class PostController extends Controller
 
     public function getPostBySlug($slug)
     {
-        $posts=Posts::where('slug',$slug)->get();
+        $posts=Posts::where('slug',$slug)->with('categories')->get();
     }
 
     public function addImage(AddPostImageRequest $request)

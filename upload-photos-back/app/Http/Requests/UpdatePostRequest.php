@@ -22,7 +22,11 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'=>['required','string','max:50'],
+            'post_content'=>['required','string'],
+            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg'],
+            'categories'=>['required','array'],
+            'categories.*'=>['required','integer','exists:categories,id'],
         ];
     }
 }

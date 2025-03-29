@@ -35,7 +35,7 @@ class CategoriesController extends Controller
      */
     public function show(Categories $category)
     {
-        return response(new CategoryResource($category), 201);
+        return response(new CategoryResource($category), 200);
     }
 
     /**

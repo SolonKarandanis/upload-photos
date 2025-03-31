@@ -11,8 +11,8 @@ const navigation = [
   {name: 'My Images', to: {name: 'MyImages'}},
   {name: 'Create Category', to: {name: 'CreateCategory'}},
   {name: 'Categories', to: {name: 'Categories'}},
-  {name: 'Posts', to: {name: 'Posts'}},
   {name: 'Create Post', to: {name: 'CreatePost'}},
+  {name: 'Posts', to: {name: 'Posts'}},
 ]
 const userStore = useUserStore()
 //

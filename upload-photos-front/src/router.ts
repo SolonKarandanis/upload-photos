@@ -11,6 +11,9 @@ const MyImages = () => import('./pages/MyImages.vue');
 const SaveCategory = () => import('./pages/SaveCategory.vue');
 const Categories = () => import('./pages/Categories.vue');
 
+const PostList = () => import('./pages/PostList.vue');
+const SavePost = () => import('./pages/SavePost.vue');
+
 const routes:RouteRecordRaw[] =[
     {
         path:'/',
@@ -40,7 +43,17 @@ const routes:RouteRecordRaw[] =[
                 path:'/categories/:id',
                 name:'UpdateCategory',
                 component:SaveCategory
-            }
+            },
+            {
+                path:'/posts',
+                name:'posts',
+                component:PostList
+            },
+            {
+                path:'/posts/create',
+                name:'CreatePost',
+                component:SavePost
+            },
         ],
         beforeEnter: async (_to, _from, next) => {
             try {

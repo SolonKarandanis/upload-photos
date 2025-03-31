@@ -46,7 +46,7 @@ const routes:RouteRecordRaw[] =[
             },
             {
                 path:'/posts',
-                name:'posts',
+                name:'Posts',
                 component:PostList
             },
             {

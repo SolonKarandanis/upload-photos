@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import Button from "primevue/button"
+import InputText from 'primevue/inputtext';
 </script>
 
 <template>
-  <Button >Hi</Button>
+  <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form>
+      <InputText type="text" name="title" placeholder="Title" />
+    </form>
+  </div>
+
 </template>
 
 <style scoped>

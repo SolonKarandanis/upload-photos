@@ -4,19 +4,23 @@ import Editor from 'primevue/editor';
 import MultiSelect from 'primevue/multiselect';
 import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload';
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
+import {useCategory} from "../composables/useCategory.ts";
 
-const selectedCities = ref();
-const cities = ref([
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
-]);
+const {fetchCategories,categories,iLoading} = useCategory();
+
+onMounted(() => {
+  fetchCategories();
+})
+
+const selectedCategory = ref();
+
 
 import { useToast } from "primevue/usetoast";
+
 const toast = useToast();
+
+
 
 const onAdvancedUpload = () => {
   toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
@@ -34,17 +38,23 @@ const onAdvancedUpload = () => {
       </div>
       <div class="flex flex-col gap-1 mb-3">
         <MultiSelect
-            v-model="selectedCities"
+            v-model="selectedCategory"
             showClear
-            :options="cities"
+            :options="categories"
             optionLabel="name"
+            optionValue="id"
             filter
             placeholder="Select Categories"
             :maxSelectedLabels="3"
+            :loading="iLoading"
             class="w-full md:w-80" />
       </div>
       <div class="flex flex-col gap-1 mb-3">
-        <FileUpload name="demo[]"  @upload="onAdvancedUpload()" :multiple="true" accept="image/*" :maxFileSize="1000000">
+        <FileUpload name="demo[]"
+                    mode="basic"
+                    @upload="onAdvancedUpload()"
+                    accept="image/*"
+                    :maxFileSize="1000000">
           <template #empty>
             <span>Drag and drop files to here to upload.</span>
           </template>

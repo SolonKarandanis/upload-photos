@@ -18,12 +18,12 @@ class PostResource extends JsonResource
         return [
             'id'=>$this->id,
             'title'=>$this->title,
-            'post_content'=>$this->post_content,
+            'postContent'=>$this->post_content,
             'slug'=>$this->slug,
             'categories'=> $this->categories->map(fn($category) => new CategoryResource($category),true),
             'image' => url(Storage::url($this->image)),
-            'updated_at'=>$this->updated_at,
-            'created_at'=>$this->created_at
+            'updatedAt'=>$this->updated_at,
+            'createdAt'=>$this->created_at
         ];
     }
 }

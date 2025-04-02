@@ -6,21 +6,34 @@ import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload';
 import {onMounted, ref} from "vue";
 import {useCategory} from "../composables/useCategory.ts";
-import {useForm} from "vee-validate";
+import {useField, useForm} from "vee-validate";
 import {createPostSchema} from "../schemas/post.schemas.ts";
+import {usePost} from "../composables/usePost.ts";
+import type {CreatePostRequest} from "../models/post.model.ts";
 
-const {fetchCategories,categories,iLoading} = useCategory();
+const {fetchCategories,categories:categoryList,iLoading} = useCategory();
+const {createPost,errorMessage,iLoading:postLoading} = usePost();
 
 onMounted(() => {
   fetchCategories();
 })
 
-const {  handleSubmit ,errors} = useForm({
+const {  handleSubmit ,setFieldValue,errors} = useForm({
   validationSchema: createPostSchema,
 });
 
-const onSubmit = handleSubmit((values)=>{
-  console.log(values)
+const { value: title } = useField('title');
+const { value: postContent } = useField('postContent');
+const { value: categories } = useField('categories');
+
+const onSubmit = handleSubmit(({title,postContent,categories,image})=>{
+  const createPostRequest:CreatePostRequest={
+    title,
+    postContent,
+    categories,
+    image
+  }
+  createPost(createPostRequest);
 });
 
 
@@ -43,7 +56,7 @@ const onAdvancedUpload = () => {
         <MultiSelect
             v-model="selectedCategory"
             showClear
-            :options="categories"
+            :options="categoryList"
             optionLabel="name"
             optionValue="id"
             filter

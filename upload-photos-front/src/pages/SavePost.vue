@@ -6,6 +6,8 @@ import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload';
 import {onMounted, ref} from "vue";
 import {useCategory} from "../composables/useCategory.ts";
+import {useForm} from "vee-validate";
+import {createPostSchema} from "../schemas/post.schemas.ts";
 
 const {fetchCategories,categories,iLoading} = useCategory();
 
@@ -13,23 +15,24 @@ onMounted(() => {
   fetchCategories();
 })
 
+const {  handleSubmit ,errors} = useForm({
+  validationSchema: createPostSchema,
+});
+
+const onSubmit = handleSubmit((values)=>{
+  console.log(values)
+});
+
+
 const selectedCategory = ref();
-
-
-import { useToast } from "primevue/usetoast";
-
-const toast = useToast();
-
-
-
 const onAdvancedUpload = () => {
-  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+
 };
 </script>
 
 <template>
   <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form>
+    <form @submit="onSubmit">
       <div class="flex flex-col gap-1 mb-3">
         <InputText type="text" name="title" placeholder="Title" />
       </div>

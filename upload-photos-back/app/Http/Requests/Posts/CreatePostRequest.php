@@ -24,7 +24,7 @@ class CreatePostRequest extends FormRequest
         return [
             'title'=>['required','string','max:50'],
             'postContent'=>['required','string'],
-            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg'],
+            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg,avif'],
             'categories'=>['required','array'],
             'categories.*'=>['required','integer','exists:categories,id'],
         ];

@@ -19,6 +19,7 @@ class PostListResource extends JsonResource
         return [
             'id'=>$this->id,
             'title'=>$this->title,
+            'postContent'=>$this->post_content,
             'slug'=>$this->slug,
             'image' => url(Storage::url($this->image)),
         ];

@@ -10,6 +10,7 @@ import {useField, useForm} from "vee-validate";
 import {createPostSchema} from "../schemas/post.schemas.ts";
 import {usePost} from "../composables/usePost.ts";
 import type {CreatePostRequest} from "../models/post.model.ts";
+import Header from "../components/Header.vue";
 
 const {fetchCategories,categories:categoryList,iLoading} = useCategory();
 const {createPost,errorMessage,iLoading:postLoading} = usePost();
@@ -44,6 +45,9 @@ const onAdvancedUpload = () => {
 </script>
 
 <template>
+  <Header>
+    Save Post
+  </Header>
   <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
     <form @submit="onSubmit">
       <div class="flex flex-col gap-1 mb-3">

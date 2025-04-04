@@ -11,7 +11,6 @@ import {useRoute} from "vue-router";
 const {
   iLoading,
   selectedCategory,
-  errorMessage,
   saveCategory,
   fetchCategory
 } = useCategory();

@@ -11,7 +11,7 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>['required','string','max:50'],
+            'title'=>['required','string','max:250'],
             'postContent'=>['required','string'],
             'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg,avif'],
             'categories'=>['required','array'],

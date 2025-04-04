@@ -9,6 +9,7 @@ use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -35,11 +36,13 @@ class PostController extends Controller
 
     public function store(CreatePostRequest $request)
     {
+        $user=$request->user();
         $path = $request->file('image')->store('images', 'public');
         $post = Posts::create([
             'title' => $request->title,
             'slug' => $this->generateSlug($request->title),
-            'post_content' => $request->post_content,
+            'post_content' => $request->postContent,
+            'created_by' => $user,
             'image' => $path,
 
         ])->categories()->attach($request->categories);

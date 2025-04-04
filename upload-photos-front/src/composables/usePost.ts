@@ -21,9 +21,7 @@ export function usePost(){
                 formData.append('image', image);
                 formData.append('postContent', postContent);
                 formData.append('title', title);
-                for(const category of categories){
-                    formData.append('categories', String(category));
-                }
+                formData.append('categories', JSON.stringify(categories));
                 axiosClient.post("/api/posts",formData)
                     .then((_)=>{
                         iLoading.value=false;

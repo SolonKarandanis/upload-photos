@@ -11,7 +11,7 @@ class Posts extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title', 'post_content', 'image','slug'
+        'title', 'post_content', 'image','slug','created_by'
     ];
 
     public function categories():BelongsToMany

@@ -38,6 +38,7 @@ class PostController extends Controller
     {
         $user=$request->user();
         Log::info('Showing the user profile for user: {$user}', ['$user' => $user]);
+        $categories_array=json_decode($request->categories);
         $path = $request->file('image')->store('images', 'public');
         $post = Posts::create([
             'title' => $request->title,
@@ -46,9 +47,10 @@ class PostController extends Controller
             'created_by' => $user->id,
             'image' => $path,
 
-        ])->categories()->attach($request->categories);
-
-        return response(new PostResource($post), 200);
+        ]);
+        Log::info('Created Post : {$post}', ['$post' => $post]);
+        $post->categories()->attach($categories_array);
+        return response(new PostResource($post), 201);
     }
 
     public function update(UpdatePostRequest $request, Posts $post)

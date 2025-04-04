@@ -9,6 +9,7 @@ use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -36,6 +37,7 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $user=$request->user();
+        Log::info('Showing the user profile for user: {$user}', ['$user' => $user]);
         $path = $request->file('image')->store('images', 'public');
         $post = Posts::create([
             'title' => $request->title,
@@ -51,6 +53,9 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Posts $post)
     {
+//        if ($request->user()->isDirty('email')) {
+//            $request->user()->email_verified_at = null;
+//        }
         $post->title = $request->title;
         $post->slug = $this->generateSlug($request->title);
         $post->post_content = $request->post_content;

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddPostImageRequest;
 use App\Http\Requests\Posts\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -42,7 +41,7 @@ class PostController extends Controller
             'title' => $request->title,
             'slug' => $this->generateSlug($request->title),
             'post_content' => $request->postContent,
-            'created_by' => $user,
+            'created_by' => $user->id,
             'image' => $path,
 
         ])->categories()->attach($request->categories);

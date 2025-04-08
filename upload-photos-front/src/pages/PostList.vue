@@ -2,6 +2,8 @@
 
 import Card from "primevue/card";
 import Button from 'primevue/button';
+import Chip from 'primevue/chip';
+import Skeleton from 'primevue/skeleton';
 import {usePost} from "../composables/usePost.ts";
 import {onMounted} from "vue";
 import Header from "../components/Header.vue";
@@ -26,7 +28,11 @@ onMounted(() => {
           <img :src="post.image" alt="Image" />
         </template>
         <template #title>{{post.title}}}</template>
-        <template #subtitle>Card subtitle</template>
+        <template #subtitle>
+          <Chip  v-for="category in post.categories"
+                 :key="category.id"
+                 :label="category.name" />
+        </template>
         <template #content>
           <p class="m-0">
             {{post.postContent}}

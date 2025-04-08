@@ -20,6 +20,7 @@ class PostListResource extends JsonResource
             'id'=>$this->id,
             'title'=>$this->title,
             'postContent'=>$this->post_content,
+            'categories'=> $this->categories->map(fn($category) => new CategoryResource($category),true),
             'slug'=>$this->slug,
             'image' => url(Storage::url($this->image)),
         ];

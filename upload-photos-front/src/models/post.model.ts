@@ -8,11 +8,11 @@ export interface Post extends BasePost{
     id:number;
     slug:string;
     image:string;
+    postContent:string;
+    categories:Category[];
 }
 
 export interface PostDetails extends Post{
-    postContent:string;
-    categories:Category[];
     updatedAt:string;
     createdAt:string;
 }

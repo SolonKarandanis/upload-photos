@@ -71,8 +71,7 @@ class PostController extends Controller
     private function generateSlug($title)
     {
         $randomNumber = Str::random(6) . time();
-        $slug = Str::slug($title). '-' . $randomNumber;
-        return response($slug);
+        return Str::slug($title). '-' . $randomNumber;
     }
 
     public function destroy(Posts $post)

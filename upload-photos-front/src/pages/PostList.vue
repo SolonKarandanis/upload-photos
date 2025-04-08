@@ -6,7 +6,7 @@ import {usePost} from "../composables/usePost.ts";
 import {onMounted} from "vue";
 import Header from "../components/Header.vue";
 
-const {fetchPosts,iLoading} = usePost();
+const {fetchPosts,posts,iLoading} = usePost();
 
 onMounted(() => {
   fetchPosts();
@@ -19,16 +19,17 @@ onMounted(() => {
   </Header>
   <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <Card style="width: 25rem; overflow: hidden">
+      <Card v-for="post in posts"
+            :key="post.id"
+            style="width: 25rem; overflow: hidden">
         <template #header>
-          <img alt="user header" src="" />
+          <img :src="post.image" alt="Image" />
         </template>
-        <template #title>Advanced Card</template>
+        <template #title>{{post.title}}}</template>
         <template #subtitle>Card subtitle</template>
         <template #content>
           <p class="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-            quas!
+            {{post.postContent}}
           </p>
         </template>
         <template #footer>

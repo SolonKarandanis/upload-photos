@@ -10,7 +10,6 @@ use App\Http\Resources\PostResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -77,7 +76,7 @@ class PostController extends Controller
 
     public function destroy(Posts $post)
     {
-        Storage::delete($post->image);
+        $post->deleteImage();
         $post->delete();
 
         return response(null, 204);

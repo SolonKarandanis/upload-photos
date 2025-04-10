@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 class Posts extends Model
 {
@@ -27,5 +28,10 @@ class Posts extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class,'created_by');
+    }
+
+    public function deleteImage():void
+    {
+        Storage::delete($this->image);
     }
 }

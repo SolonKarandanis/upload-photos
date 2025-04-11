@@ -21,7 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
 
-        //
+        $middleware->alias([
+            'verifyCategoryCount'=> \App\Http\Middleware\VerifyCategoriesCount::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

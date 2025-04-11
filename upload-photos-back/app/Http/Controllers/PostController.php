@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    public function __construct(){
+        $this->middleware('verifyCategoriesCount')->only(['store']);
+    }
     public function loadMorePosts()
     {
         $posts =Posts::query()

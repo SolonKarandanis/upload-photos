@@ -2107,8 +2107,10 @@ namespace PHPSTORM_META {
 'cache.headers','can','guest','password.confirm','precognitive',
 'signed','throttle','verified','verifyCategoryCount',);
         registerArgumentsSet('routes', 
-'sanctum.csrf-cookie','image.index','image.store','image.destroy',
-'categories.index','categories.store','categories.show','categories.update','categories.destroy','register',
+'sanctum.csrf-cookie','generated::RFer27sbCB4oiDYY','image.index','image.store','image.destroy',
+'categories.index','categories.store','categories.show','categories.update','categories.destroy',
+'generated::PEGlScb1IZN1N3Ks','generated::wZLzK11UCJdgqmtL','generated::KVevXEf9RG43zu9c','generated::BoXPjiW6Kf8rqWS0','generated::fJ7ICTrB5nxDPGc3',
+'generated::xwGdHvs893f9j8IB','generated::7M8YSexaUlOrt2sy','generated::2l9U27aCcxwm7Ufw','generated::iRfKKKb6eSLzSsAg','register',
 'login','password.email','password.store','verification.verify','verification.send',
 'logout','storage.local',);
         registerArgumentsSet('views', 

@@ -6,7 +6,6 @@ use App\Dtos\AccountDto;
 use App\Dtos\TransferDto;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transfer;
-use App\Services\TransferServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;

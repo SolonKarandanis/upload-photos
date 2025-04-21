@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 trait ApiResponseTrait
 {
 
-    private function parseGivenData(array $data =[], int $statusCode, array $headers = [])
+    private function parseGivenData(array $data =[], int $statusCode, array $headers = []): array
     {
         //success, message ,result,errors, exception,  status, error_code
         $responseStructure = [

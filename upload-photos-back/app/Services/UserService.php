@@ -7,6 +7,7 @@ use App\Exceptions\InvalidPinLengthException;
 use App\Exceptions\PinHasAlreadyBeenSetException;
 use App\Exceptions\PinNotSetException;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,14 +16,13 @@ use Illuminate\Support\Facades\Hash;
 class UserService implements UserServiceInterface
 {
 
+    public function __construct(public readonly UserRepository $userRepository)
+    {
+    }
+
     public function createUser(UserDto $userDto): Builder|Model
     {
-        return User::query()->create([
-            'name' => $userDto->getName(),
-            'email' => $userDto->getEmail(),
-            'password' => $userDto->getPassword(),
-            'phone_number' => $userDto->getPhoneNumber(),
-        ]);
+        return $this->userRepository->createUser($userDto);
     }
 
     /**
@@ -31,7 +31,7 @@ class UserService implements UserServiceInterface
      */
     public function getUserById(int $userId): Builder|Model
     {
-        $user = User::query()->where('id', $userId)->first();
+        $user = $this->userRepository->getUserById($userId);
         if (!$user) {
             throw new ModelNotFoundException("User not found");
         }

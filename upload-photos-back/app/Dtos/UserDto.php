@@ -21,6 +21,41 @@ class UserDto implements DtoInterface
 
     private ?Carbon $updated_at;
 
+
+    public static function fromAPiFormRequest(FormRequest $request): DtoInterface
+    {
+        $userDto = new UserDto();
+        $userDto->setName($request->input('name'));
+        $userDto->setEmail($request->input('email'));
+        $userDto->setPassword($request->input('password'));
+        $userDto->setPhoneNumber($request->input('phoneNumber'));
+        return $userDto;
+    }
+
+    public static function fromModel(User|Model $model): UserDto
+    {
+        $userDto = new UserDto();
+        $userDto->setId($model->id);
+        $userDto->setName($model->name);
+        $userDto->setEmail($model->email);
+        $userDto->setPhoneNumber($model->phone_number);
+        $userDto->setCreatedAt($model->created_at);
+        $userDto->setUpdatedAt($model->updated_at);
+        return $userDto;
+    }
+
+    public static function toArray(Model|User $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'email' => $model->email,
+            'phone_number' => $model->phone_number,
+            'created_at' => $model->created_at,
+            'updated_at' => $model->updated_at,
+        ];
+    }
+
     /**
      * @return string
      */
@@ -149,41 +184,5 @@ class UserDto implements DtoInterface
     public function setUpdatedAt(?Carbon $updated_at): void
     {
         $this->updated_at = $updated_at;
-    }
-
-
-
-    public static function fromAPiFormRequest(FormRequest $request): DtoInterface
-    {
-        $userDto = new UserDto();
-        $userDto->setName($request->input('name'));
-        $userDto->setEmail($request->input('email'));
-        $userDto->setPassword($request->input('password'));
-        $userDto->setPhoneNumber($request->input('phoneNumber'));
-        return $userDto;
-    }
-
-    public static function fromModel(User|Model $model): UserDto
-    {
-        $userDto = new UserDto();
-        $userDto->setId($model->id);
-        $userDto->setName($model->name);
-        $userDto->setEmail($model->email);
-        $userDto->setPhoneNumber($model->phone_number);
-        $userDto->setCreatedAt($model->created_at);
-        $userDto->setUpdatedAt($model->updated_at);
-        return $userDto;
-    }
-
-    public static function toArray(Model|User $model): array
-    {
-        return [
-            'id' => $model->id,
-            'name' => $model->name,
-            'email' => $model->email,
-            'phone_number' => $model->phone_number,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
-        ];
     }
 }

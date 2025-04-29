@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dtos\PostDto;
 use App\Http\Requests\AddPostImageRequest;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
@@ -41,6 +42,8 @@ class PostController extends Controller
     {
         $user=$request->user();
         Log::info('Showing the user profile for user: {$user}', ['$user' => $user]);
+        $postDto = PostDto::fromAPiFormRequest($request);
+
         $categories_array=json_decode($request->categories);
         $path = $request->file('image')->store('images', 'public');
         $post = Posts::create([

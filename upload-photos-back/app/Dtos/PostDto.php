@@ -6,6 +6,7 @@ use App\Models\Posts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class PostDto implements DtoInterface
 {
@@ -13,13 +14,19 @@ class PostDto implements DtoInterface
     private string $title;
     private string $postConent;
     private string $createdBy;
+
+    private string $slug;
     private array|UploadedFile|null $image;
+
+    private string $path;
 
     private array $categories;
     public static function fromApiFormRequest(FormRequest $request): DtoInterface
     {
         $postDto = new PostDto();
-        $postDto->setTitle($request->get('title'));
+        $title = $request->get("title");
+        $postDto->setTitle($title);
+        $postDto->slug=self::generateSlug($title);
         $postDto->setPostConent($request->get('postContent'));
         $postDto->setCreatedBy($request->user()->id);
         $postDto->setImage($request->file('image'));
@@ -34,6 +41,12 @@ class PostDto implements DtoInterface
         $postDto->setTitle($model->title);
         $postDto->setCreatedBy($model->createdBy);
         return $postDto;
+    }
+
+    private function generateSlug($title):string
+    {
+        $randomNumber = Str::random(6) . time();
+        return Str::slug($title). '-' . $randomNumber;
     }
 
     public static function toArray(Posts | Model $model): array
@@ -93,4 +106,20 @@ class PostDto implements DtoInterface
     {
         $this->image = $image;
     }
+
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): void
+    {
+        $this->path = $path;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
 }

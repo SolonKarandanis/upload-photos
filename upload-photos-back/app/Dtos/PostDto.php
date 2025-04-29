@@ -2,41 +2,47 @@
 
 namespace App\Dtos;
 
+use App\Models\Posts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 
 class PostDto implements DtoInterface
 {
 
-    private ?int $id;
     private string $title;
     private string $postConent;
     private string $createdBy;
-    private string $image;
+    private array|UploadedFile|null $image;
+
+    private array $categories;
     public static function fromApiFormRequest(FormRequest $request): DtoInterface
     {
-        // TODO: Implement fromApiFormRequest() method.
+        $postDto = new PostDto();
+        $postDto->setTitle($request->get('title'));
+        $postDto->setPostConent($request->get('postContent'));
+        $postDto->setCreatedBy($request->user()->id);
+        $postDto->setImage($request->file('image'));
+        $categories_array=json_decode($request->categories);
+        $postDto->setCategories($categories_array);
+        return $postDto;
     }
 
-    public static function fromModel(Model $model): DtoInterface
+    public static function fromModel(Posts | Model $model): PostDto
     {
-        // TODO: Implement fromModel() method.
+        $postDto = new PostDto();
+        $postDto->setTitle($model->title);
+        $postDto->setCreatedBy($model->createdBy);
+        return $postDto;
     }
 
-    public static function toArray(Model $model): array
+    public static function toArray(Posts | Model $model): array
     {
-        // TODO: Implement toArray() method.
+        return [
+            'title' => $model->title,
+        ];
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
 
     public function getTitle(): string
     {
@@ -68,12 +74,22 @@ class PostDto implements DtoInterface
         $this->createdBy = $createdBy;
     }
 
-    public function getImage(): string
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(array $categories): void
+    {
+        $this->categories = $categories;
+    }
+
+    public function getImage(): array|UploadedFile|null
     {
         return $this->image;
     }
 
-    public function setImage(string $image): void
+    public function setImage(array|UploadedFile|null $image): void
     {
         $this->image = $image;
     }

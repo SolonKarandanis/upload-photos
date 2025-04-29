@@ -35,14 +35,21 @@ class PostRepository implements PostRepositoryInterface
             'slug' => $postDto->getSlug(),
             'post_content' => $postDto->getPostConent(),
             'created_by' => $postDto->getCreatedBy(),
-            'image' => $postDto->getImage(),
+            'image' => $postDto->getPath(),
         ]);
         $post->categories()->attach($postDto->getCategories());
         return $post;
     }
 
-    public function updatePost(PostDto $postDto): Builder|Model
+    public function updatePost(Posts $post,array $categories): Builder|Model
     {
-        // TODO: Implement updatePost() method.
+        $post->categories()->sync($categories);
+        $post->save();
+        return $post;
+    }
+
+    public function getPostById(int $id): Model|Collection
+    {
+        return Posts::query()->where('id', $id)->first();
     }
 }

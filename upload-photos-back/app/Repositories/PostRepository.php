@@ -28,7 +28,7 @@ class PostRepository implements PostRepositoryInterface
         return $posts_query->get();
     }
 
-    public function createPost(PostDto $postDto): Builder|Model
+    public function createPost(PostDto $postDto): Builder|Posts
     {
         $post = Posts::query()->create([
             'title' => $postDto->getTitle(),
@@ -41,14 +41,14 @@ class PostRepository implements PostRepositoryInterface
         return $post;
     }
 
-    public function updatePost(Posts $post,array $categories): Builder|Model
+    public function updatePost(Posts $post,array $categories): Builder|Posts
     {
         $post->categories()->sync($categories);
         $post->save();
         return $post;
     }
 
-    public function getPostById(int $id): Model|Collection
+    public function getPostById(int $id): Posts
     {
         return Posts::query()->where('id', $id)->first();
     }

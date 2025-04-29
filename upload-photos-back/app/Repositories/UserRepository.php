@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRepository implements UserRepositoryInterface
 {
 
-    public function createUser(UserDto $userDto): Builder|Model
+    public function createUser(UserDto $userDto): Builder|User
     {
         return User::query()->create([
             'name' => $userDto->getName(),
@@ -20,7 +20,7 @@ class UserRepository implements UserRepositoryInterface
         ]);
     }
 
-    public function getUserById(int $userId): Builder|Model
+    public function getUserById(int $userId): Builder|User
     {
         return User::query()->where('id', $userId)->first();
     }

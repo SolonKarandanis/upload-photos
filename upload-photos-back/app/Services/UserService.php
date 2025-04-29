@@ -20,7 +20,7 @@ class UserService implements UserServiceInterface
     {
     }
 
-    public function createUser(UserDto $userDto): Builder|Model
+    public function createUser(UserDto $userDto): Builder|User
     {
         return $this->userRepository->createUser($userDto);
     }
@@ -29,7 +29,7 @@ class UserService implements UserServiceInterface
      * @param int $userId
      * @return Builder|Model
      */
-    public function getUserById(int $userId): Builder|Model
+    public function getUserById(int $userId): Builder|User
     {
         $user = $this->userRepository->getUserById($userId);
         if (!$user) {

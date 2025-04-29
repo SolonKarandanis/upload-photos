@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Services;
+
+use App\Dtos\PostDto;
+use App\Models\Posts;
+use App\Repositories\PostRepository;
+use App\Services\PostServiceInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class PostService implements PostServiceInterface
+{
+
+    public function __construct(public readonly PostRepository $postRepository)
+    {
+    }
+    public function getAllPosts(): Collection
+    {
+       return $this->postRepository->getAllPosts();
+    }
+
+    public function getPosts(string $query): Collection
+    {
+        return $this->postRepository->getPosts($query);
+    }
+
+    public function createPost(PostDto $postDto): Builder|Posts
+    {
+        // TODO: Implement createPost() method.
+    }
+
+    public function updatePost(Posts $post, array $categories): Builder|Posts
+    {
+        // TODO: Implement updatePost() method.
+    }
+
+    public function getPostById(int $id): Builder|Posts
+    {
+        $post = $this->postRepository->getPostById($id);
+        if (!$post) {
+            throw new ModelNotFoundException("Post not found");
+        }
+        return $post;
+    }
+
+    public function deletePost(int $postId): void
+    {
+        $post = $this->getPostById($postId);
+        $post->deleteImage();
+        $post->delete();
+    }
+}

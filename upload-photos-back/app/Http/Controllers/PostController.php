@@ -9,33 +9,27 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
 use App\Models\Posts;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function __construct(){
+    public function __construct(public readonly PostService $postService){
         $this->middleware('verifyCategoriesCount')->only(['store']);
     }
     public function loadMorePosts()
     {
-        $posts =Posts::query()
-            ->orderBy('id','desc')
-            ->get();
+        $posts = $this->postService->getAllPosts();
         return response(PostListResource::collection($posts),200);
     }
 
     public function getPosts(Request $request)
     {
         $query = $request->get('query');
-        $posts_query = Posts::query();
-        if(!is_null($query)){
-            $posts = $posts_query->where('title','like','%'.$query.'%')
-                ->get();
-            return response(PostListResource::collection($posts),200);
-        }
-        return response(PostListResource::collection($posts_query->get()),200);
+        $posts = $this->postService->getPosts($query);
+        return response(PostListResource::collection($posts),200);
     }
 
     public function store(CreatePostRequest $request)
@@ -80,22 +74,21 @@ class PostController extends Controller
         return Str::slug($title). '-' . $randomNumber;
     }
 
-    public function destroy(Posts $post)
+    public function destroy(int $id)
     {
-        $post->deleteImage();
-        $post->delete();
-
+       $this->postService->deletePost($id);
         return response(null, 204);
     }
 
-    public function show(Posts $post)
+    public function show(int $id)
     {
+        $post = $this->postService->getPostById($id);
         return response(new PostResource($post), 200);
     }
 
     public function getPostBySlug($slug)
     {
-        $posts=Posts::where('slug',$slug)->with('categories')->get();
+
     }
 
     public function addImage(AddPostImageRequest $request)

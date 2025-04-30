@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Dtos\PostDto;
-use App\Http\Requests\AddPostImageRequest;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
-use App\Models\Posts;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -51,12 +48,6 @@ class PostController extends Controller
 //        $user->trophies()->detach($trophyIds);
     }
 
-    private function generateSlug($title):string
-    {
-        $randomNumber = Str::random(6) . time();
-        return Str::slug($title). '-' . $randomNumber;
-    }
-
     public function destroy(int $id)
     {
        $this->postService->deletePost($id);
@@ -67,15 +58,5 @@ class PostController extends Controller
     {
         $post = $this->postService->getPostById($id);
         return response(new PostResource($post), 200);
-    }
-
-    public function getPostBySlug($slug)
-    {
-
-    }
-
-    public function addImage(AddPostImageRequest $request)
-    {
-
     }
 }

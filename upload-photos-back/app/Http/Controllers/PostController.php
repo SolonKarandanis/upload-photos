@@ -37,19 +37,8 @@ class PostController extends Controller
         $user=$request->user();
         Log::info('Showing the user profile for user: {$user}', ['$user' => $user]);
         $postDto = PostDto::fromAPiFormRequest($request);
-
-        $categories_array=json_decode($request->categories);
-        $path = $request->file('image')->store('images', 'public');
-        $post = Posts::create([
-            'title' => $request->title,
-            'slug' => $this->generateSlug($request->title),
-            'post_content' => $request->postContent,
-            'created_by' => $user->id,
-            'image' => $path,
-
-        ]);
+        $post = $this->postService->createPost($postDto);
         Log::info('Created Post : {$post}', ['$post' => $post]);
-        $post->categories()->attach($categories_array);
         return response(new PostResource($post), 201);
     }
 

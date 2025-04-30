@@ -15,9 +15,9 @@ interface PostServiceInterface
 
     public function getPosts(string $query):Collection;
 
-    public function createPost(PostDto $postDto): Builder|Posts;
+    public function createPost(PostDto $postDto): Builder|Posts| null;
 
-    public function updatePost(Posts $post, array $categories): Builder| Posts;
+    public function updatePost(Posts $post, array $categories): Builder| Posts| null;
 
     public function getPostById(int $id): Builder|Posts;
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class PostService implements PostServiceInterface
 {
@@ -27,9 +28,20 @@ class PostService implements PostServiceInterface
         return $this->postRepository->getPosts($query);
     }
 
-    public function createPost(PostDto $postDto): Builder|Posts
+    public function createPost(PostDto $postDto): Builder|Posts| null
     {
-        // TODO: Implement createPost() method.
+        try{
+            DB::beginTransaction();
+            $path = $postDto->getImage()->store('images', 'public');
+            $postDto->setPath($path);
+            $post = $this->postRepository->createPost($postDto);
+            DB::commit();
+            return $post;
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return null;
+        }
     }
 
     public function updatePost(Posts $post, array $categories): Builder|Posts
@@ -49,7 +61,14 @@ class PostService implements PostServiceInterface
     public function deletePost(int $postId): void
     {
         $post = $this->getPostById($postId);
-        $post->deleteImage();
-        $post->delete();
+        try{
+            DB::beginTransaction();
+            $post->deleteImage();
+            $post->delete();
+            DB::commit();
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+        }
     }
 }

@@ -44,9 +44,15 @@ class PostService implements PostServiceInterface
         }
     }
 
-    public function updatePost(Posts $post, array $categories): Builder|Posts
+    public function updatePost(PostDto $postDto, int $postId): Builder|Posts
     {
-        // TODO: Implement updatePost() method.
+        $post = $this->getPostById($postId);
+        $post->title = $postDto->getTitle();
+        $post->slug = $postDto->getSlug();
+        $post->post_content = $postDto->getPostConent();
+        $post->categories()->sync($postDto->getCategories());
+        $post->save();
+        return $post;
     }
 
     public function getPostById(int $id): Builder|Posts

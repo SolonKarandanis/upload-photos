@@ -42,16 +42,10 @@ class PostController extends Controller
         return response(new PostResource($post), 201);
     }
 
-    public function update(UpdatePostRequest $request, Posts $post)
+    public function update(UpdatePostRequest $request, int $postId)
     {
-//        if ($request->user()->isDirty('email')) {
-//            $request->user()->email_verified_at = null;
-//        }
-        $post->title = $request->title;
-        $post->slug = $this->generateSlug($request->title);
-        $post->post_content = $request->post_content;
-        $post->categories()->sync($request->categories);
-        $post->save();
+        $postDto = PostDto::fromAPiFormRequest($request);
+        $post = $this->postService->updatePost($postDto, $postId);
         return response(new PostResource($post), 200);
 //        $user->trophies()->detach(); //leave the detach function empty
 //        $user->trophies()->detach($trophyIds);

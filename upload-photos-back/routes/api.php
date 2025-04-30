@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PinController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('/categories', CategoriesController::class)
         ->only(['index','show', 'store', 'update','destroy']);
+
+    Route::prefix('onboarding')->group(function () {
+        Route::post('setup/pin', [PinController::class, 'setupPin']);
+        Route::middleware('has.set.pin')->group(function () {
+            Route::post('validate/pin', [PinController::class, 'validatePin']);
+//            Route::post('generate/account-number', [AccountController::class, 'store']);
+        });
+    });
 
     Route::get('posts',[PostController::class,'getPosts']);
     Route::get('posts/{id}',[PostController::class,'show']);

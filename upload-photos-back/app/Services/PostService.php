@@ -47,12 +47,7 @@ class PostService implements PostServiceInterface
     public function updatePost(PostDto $postDto, int $postId): Builder|Posts
     {
         $post = $this->getPostById($postId);
-        $post->title = $postDto->getTitle();
-        $post->slug = $postDto->getSlug();
-        $post->post_content = $postDto->getPostConent();
-        $post->categories()->sync($postDto->getCategories());
-        $post->save();
-        return $post;
+        return $this->postRepository->updatePost($post, $postDto->getCategories());
     }
 
     public function getPostById(int $id): Builder|Posts

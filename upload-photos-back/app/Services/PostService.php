@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class PostService implements PostServiceInterface
 {
 
-    public function __construct(public readonly PostRepository $postRepository)
+    public function __construct(private readonly PostRepository $postRepository)
     {
     }
     public function getAllPosts(): Collection

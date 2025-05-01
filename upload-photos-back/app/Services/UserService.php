@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 class UserService implements UserServiceInterface
 {
 
-    public function __construct(public readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository)
     {
     }
 

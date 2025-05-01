@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class PinController extends Controller
 {
-   public function __construct(public readonly UserService $userService)
+   public function __construct(private readonly UserService $userService)
    {
    }
 

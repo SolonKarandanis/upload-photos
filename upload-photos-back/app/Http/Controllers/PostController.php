@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
-    public function __construct(public readonly PostService $postService){
+    public function __construct(private readonly PostService $postService){
         $this->middleware('verifyCategoriesCount')->only(['store']);
     }
     public function loadMorePosts()

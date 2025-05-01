@@ -24,9 +24,9 @@ class AccountService implements AccountServiceInterface
 {
 
     public function __construct(
-        public readonly UserService $userService,
-        public readonly TransactionService $transactionService,
-        public readonly TransferService $transferService,
+        private readonly UserService $userService,
+        private readonly TransactionService $transactionService,
+        private readonly TransferService $transferService,
     )
     {
     }

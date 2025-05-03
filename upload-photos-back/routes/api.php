@@ -33,6 +33,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
     });
 
+    Route::middleware('has.set.pin')->group(function () {
+        Route::prefix('account')->group(function () {
+            Route::post('deposit', [AccountController::class, 'deposit']);
+            Route::post('withdraw', [AccountController::class, 'withdraw']);
+//            Route::post('transfer', [TransferController::class, 'store']);
+        });
+        Route::prefix('transactions')->group(function () {
+//            Route::get('history', [TransactionController::class, 'index']);
+        });
+    });
+
     Route::get('posts',[PostController::class,'getPosts']);
     Route::get('posts/{id}',[PostController::class,'show']);
     Route::get('/client/posts',[PostController::class,'loadMorePost']);

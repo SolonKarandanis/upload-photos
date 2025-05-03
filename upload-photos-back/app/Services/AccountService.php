@@ -8,6 +8,7 @@ use App\Dtos\TransactionDto;
 use App\Dtos\TransferDto;
 use App\Dtos\UserDto;
 use App\Dtos\WithdrawDto;
+use App\Events\TransactionEvent;
 use App\Exceptions\AccountNumberExistsException;
 use App\Exceptions\ANotFoundException;
 use App\Exceptions\DepositAmountToLowException;
@@ -114,7 +115,7 @@ class AccountService implements AccountServiceInterface
             );
 
 
-//            event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
+            event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
             DB::commit();
             return $transactionDto;
         }
@@ -154,7 +155,7 @@ class AccountService implements AccountServiceInterface
                 $withdrawDto
             );
 
-//            event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
+            event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
             DB::commit();
             return $transactionDto;
         } catch (\Exception $ex) {
@@ -221,8 +222,8 @@ class AccountService implements AccountServiceInterface
             $transfer = $this->transferService->createTransfer($transferDto);
             $transactionWithdrawalDto->setTransferId($transfer->id);
             $transactionDepositDto->setTransferId($transfer->id);
-//            event(new TransactionEvent($transactionWithdrawalDto, $lockedSenderAccountDto, $lockedSenderAccount));
-//            event(new TransactionEvent($transactionDepositDto, $lockedReceiverAccountDto, $lockedReceiverAccount));
+            event(new TransactionEvent($transactionWithdrawalDto, $lockedSenderAccountDto, $lockedSenderAccount));
+            event(new TransactionEvent($transactionDepositDto, $lockedReceiverAccountDto, $lockedReceiverAccount));
             DB::commit();
             return $transferDto;
         } catch (\Exception $ex) {

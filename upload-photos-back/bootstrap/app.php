@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verifyCategoryCount'=> \App\Http\Middleware\VerifyCategoriesCount::class,
+            'has.set.pin'=> \App\Http\Middleware\HasSetPinMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

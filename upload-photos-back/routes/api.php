@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageController;
@@ -28,7 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('setup/pin', [PinController::class, 'setupPin']);
         Route::middleware('has.set.pin')->group(function () {
             Route::post('validate/pin', [PinController::class, 'validatePin']);
-//            Route::post('generate/account-number', [AccountController::class, 'store']);
+            Route::post('generate/account-number', [AccountController::class, 'store']);
         });
     });
 

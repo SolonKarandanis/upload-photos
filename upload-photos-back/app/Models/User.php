@@ -49,6 +49,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function latestPost():HasOne
+    {
+        return $this->hasOne(Posts::class)->latestOfMany();
+    }
+
     public function posts(): HasMany
     {
         return $this->hasMany(Posts::class);

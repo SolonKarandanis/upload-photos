@@ -40,7 +40,7 @@ class AccountController extends Controller
     public function deposit(DepositRequest $request)
     {
         $depositDto = new DepositDto();
-        $depositDto->setAccountNumber($request->input('account_number'));
+        $depositDto->setAccountNumber($request->input('accountNumber'));
         $depositDto->setAmount($request->input('amount'));
         $depositDto->setDescription($request->input('description'));
         $this->accountService->deposit($depositDto);

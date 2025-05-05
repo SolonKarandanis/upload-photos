@@ -9,7 +9,7 @@ class DepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'account_number' => ['required','string', 'min:10'],
+            'accountNumber' => ['required','string', 'min:10'],
             'amount' => ['required','numeric'],
             'description' => ['required','string', 'min:5'],
         ];

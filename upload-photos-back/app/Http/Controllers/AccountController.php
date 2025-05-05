@@ -9,7 +9,9 @@ use App\Exceptions\AccountNumberExistsException;
 use App\Exceptions\ANotFoundException;
 use App\Exceptions\DepositAmountToLowException;
 use App\Exceptions\InvalidAccountNumberException;
+use App\Exceptions\InvalidPinException;
 use App\Http\Requests\Account\DepositRequest;
+use App\Http\Requests\Account\TransferRequest;
 use App\Http\Requests\Account\WithdrawRequest;
 use App\Services\AccountService;
 use Illuminate\Http\Request;
@@ -59,5 +61,25 @@ class AccountController extends Controller
         $withdrawDto->setPin($request->input('pin'));
         $this->accountService->withdraw($withdrawDto);
         return $this->sendSuccess([], 'Withdrawal successful');
+    }
+
+    /**
+     * @throws InvalidPinException
+     * @throws ANotFoundException
+     */
+    public function transfer(TransferRequest $request)
+    {
+        $user = $request->user();
+        $senderAccount = $this->accountService->getAccountByUserID($user->id);
+
+        $transferDto = $this->accountService->transfer(
+            $senderAccount->account_number,
+            $request->input('receiver_account_number'),
+            $request->input('pin'),
+            $request->input('amount'),
+            $request->input('description'),
+        );
+
+        return $this->sendSuccess([], 'Account Transfer In Progress');
     }
 }

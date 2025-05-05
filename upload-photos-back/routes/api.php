@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -37,10 +38,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('account')->group(function () {
             Route::post('deposit', [AccountController::class, 'deposit']);
             Route::post('withdraw', [AccountController::class, 'withdraw']);
-//            Route::post('transfer', [TransferController::class, 'store']);
+            Route::post('transfer', [AccountController::class, 'transfer']);
         });
         Route::prefix('transactions')->group(function () {
-//            Route::get('history', [TransactionController::class, 'index']);
+            Route::get('history', [TransactionController::class, 'index']);
         });
     });
 

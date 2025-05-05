@@ -12,7 +12,7 @@ const useAuthStore = defineStore('user', {
     }),
     actions: {
         fetchLoggedInUser() {
-            return axiosClient.get('/api/user')
+            return axiosClient.get('/api/auth/user')
                 .then(({data}) => {
                     console.log(data)
                     this.loggedInUser = data

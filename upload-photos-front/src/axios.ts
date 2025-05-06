@@ -3,9 +3,22 @@ import router from "./router.ts";
 
 const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    withCredentials: true,
-    withXSRFToken: true
 });
+
+axios.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        console.log('ssss')
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        Promise.reject(error);
+    }
+);
 
 axiosClient.interceptors.response.use((response) => {
     return response;

@@ -14,28 +14,26 @@ export function usePost(){
 
     const createPost=(request:CreatePostRequest) =>{
         iLoading.value=true;
-        axiosClient.get('/sanctum/csrf-cookie').then(()=>{
-            const {image,postContent,title,categories} =request;
-            if(image){
-                const formData = new FormData();
-                formData.append('image', image);
-                formData.append('postContent', postContent);
-                formData.append('title', title);
-                formData.append('categories', JSON.stringify(categories));
-                axiosClient.post("/api/posts",formData)
-                    .then((_)=>{
-                        iLoading.value=false;
-                        toast.success('Post created');
-                        router.push({name: 'Posts'})
-                    })
-                    .catch(error => {
-                        iLoading.value=false;
-                        console.log(error.response)
-                        errorMessage.value = error.response.data.message;
-                        toast.error(error.response.data.message)
-                    })
-            }
-        });
+        const {image,postContent,title,categories} =request;
+        if(image){
+            const formData = new FormData();
+            formData.append('image', image);
+            formData.append('postContent', postContent);
+            formData.append('title', title);
+            formData.append('categories', JSON.stringify(categories));
+            axiosClient.post("/api/posts",formData)
+                .then((_)=>{
+                    iLoading.value=false;
+                    toast.success('Post created');
+                    router.push({name: 'Posts'})
+                })
+                .catch(error => {
+                    iLoading.value=false;
+                    console.log(error.response)
+                    errorMessage.value = error.response.data.message;
+                    toast.error(error.response.data.message)
+                })
+        };
     }
 
     const fetchPosts = ()=>{

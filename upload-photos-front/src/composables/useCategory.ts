@@ -14,38 +14,34 @@ export function useCategory(){
 
     const createCategory=(values:{name: string})=>{
         iLoading.value=true;
-        axiosClient.get('/sanctum/csrf-cookie').then(()=>{
-            axiosClient.post("/api/categories",values)
-                .then(() => {
-                    iLoading.value=false;
-                    toast.success('Category created');
-                    router.push({name: 'Categories'})
-                })
-                .catch(error => {
-                    iLoading.value=false;
-                    console.log(error.response)
-                    errorMessage.value = error.response.data.message;
-                    toast.error(error.response.data.message)
-                })
-        });
+        axiosClient.post("/api/categories",values)
+            .then(() => {
+                iLoading.value=false;
+                toast.success('Category created');
+                router.push({name: 'Categories'})
+            })
+            .catch(error => {
+                iLoading.value=false;
+                console.log(error.response)
+                errorMessage.value = error.response.data.message;
+                toast.error(error.response.data.message)
+            });
     }
 
     const updateCategory=(values:{name: string},categoryId:number)=>{
         iLoading.value=true;
-        axiosClient.get('/sanctum/csrf-cookie').then(()=>{
-            axiosClient.put(`/api/categories/${categoryId}`,values)
-                .then(() => {
-                    iLoading.value=false;
-                    toast.success('Category updated');
-                    router.push({name: 'Categories'})
-                })
-                .catch(error => {
-                    iLoading.value=false;
-                    console.log(error.response)
-                    errorMessage.value = error.response.data.message;
-                    toast.error(error.response.data.message)
-                })
-        });
+        axiosClient.put(`/api/categories/${categoryId}`,values)
+            .then(() => {
+                iLoading.value=false;
+                toast.success('Category updated');
+                router.push({name: 'Categories'})
+            })
+            .catch(error => {
+                iLoading.value=false;
+                console.log(error.response)
+                errorMessage.value = error.response.data.message;
+                toast.error(error.response.data.message)
+            });
     }
 
     const saveCategory=(values:{name: string},categoryId:number | null)=>{

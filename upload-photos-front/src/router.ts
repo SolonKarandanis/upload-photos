@@ -55,15 +55,15 @@ const routes:RouteRecordRaw[] =[
                 component:SavePost
             },
         ],
-        beforeEnter: async (_to, _from, next) => {
-            try {
-                const authStore = useAuthStore();
-                await authStore.fetchLoggedInUser();
-                next();
-            } catch (error) {
-                next(false); // Cancel navigation if data fetching fails
-            }
-        },
+        // beforeEnter: async (_to, _from, next) => {
+        //     try {
+        //         const authStore = useAuthStore();
+        //         await authStore.fetchLoggedInUser();
+        //         next();
+        //     } catch (error) {
+        //         next(false); // Cancel navigation if data fetching fails
+        //     }
+        // },
     },
     {
         path:'/login',

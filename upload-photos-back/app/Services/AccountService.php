@@ -18,7 +18,7 @@ use App\Exceptions\InvalidPinException;
 use App\Exceptions\PinNotSetException;
 use App\Exceptions\WithdrawalAmountTooLowException;
 use App\Models\Account;
-use Illuminate\Database\Eloquent\Builder;
+use App\Repositories\AccountRepository;
 use Illuminate\Support\Facades\DB;
 
 class AccountService implements AccountServiceInterface
@@ -28,12 +28,9 @@ class AccountService implements AccountServiceInterface
         private readonly UserService $userService,
         private readonly TransactionService $transactionService,
         private readonly TransferService $transferService,
+        private readonly AccountRepository $accountRepository,
     )
     {
-    }
-    public function modelQuery(): Builder
-    {
-        return Account::query();
     }
 
     /**
@@ -42,7 +39,7 @@ class AccountService implements AccountServiceInterface
      */
     protected function hasAccountNumber(UserDto $userDto): bool
     {
-        return $this->modelQuery()->where('user_id', $userDto->getId())->exists();
+        return $this->accountRepository->hasAccountNumber($userDto->getId());
     }
 
     /**
@@ -54,15 +51,13 @@ class AccountService implements AccountServiceInterface
         if($this->hasAccountNumber($userDto)){
             throw new AccountNumberExistsException();
         }
-        return $this->modelQuery()->create([
-            'user_id' => $userDto->getId(),
-            'account_number'=> substr($userDto->getPhoneNumber(),-10)
-        ]);
+        $accountNumber = substr($userDto->getPhoneNumber(),-10);
+        return $this->accountRepository->createAccountNumber($userDto->getId(),$accountNumber);
     }
 
     public function getAccountByAccountNumber(string $accountNumber): Account
     {
-        // TODO: Implement getAccountByAccountNumber() method.
+        return $this->accountRepository->getAccountByAccountNumber($accountNumber);
     }
 
     /**
@@ -72,20 +67,11 @@ class AccountService implements AccountServiceInterface
      */
     public function getAccountByUserID(int $userID): Account
     {
-        $account = $this->modelQuery()->where('user_id', $userID)->first();
+        $account = $this->accountRepository->getAccountByUserID($userID);
         if(!$account){
             throw new ANotFoundException("Account number could not be found");
         }
         return $account;
-    }
-
-    /**
-     * @param int|string $accountNumberOrUserID
-     * @return Account
-     */
-    public function getAccount(int|string $accountNumberOrUserID): Account
-    {
-        // TODO: Implement getAccount() method.
     }
 
     /**
@@ -103,9 +89,8 @@ class AccountService implements AccountServiceInterface
         try{
             DB::beginTransaction();
             $transactionDto = new TransactionDto();
-            $accountQuery= $this->modelQuery()->where('account_number',$depositDto->getAccountNumber());
-            $this->accountExist($accountQuery);
-            $lockedAccount= $accountQuery->lockForUpdate()->first();
+            $this->accountExist($depositDto->getAccountNumber());
+            $lockedAccount= $this->accountRepository->getAccountForUpdate($depositDto->getAccountNumber());
             $accountDto = AccountDto::fromModel($lockedAccount);
             $transactionDto = $transactionDto->forDeposit(
                 $accountDto,
@@ -113,8 +98,6 @@ class AccountService implements AccountServiceInterface
                 $depositDto->getAmount(),
                 $depositDto->getDescription(),
             );
-
-
             event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
             DB::commit();
             return $transactionDto;
@@ -139,10 +122,8 @@ class AccountService implements AccountServiceInterface
         }
         try {
             DB::beginTransaction();
-            $accountQuery = $this->modelQuery()->where('account_number', $withdrawDto->getAccountNumber());
-            $this->accountExist($accountQuery);
-            /** @var Account $lockedAccount */
-            $lockedAccount = $accountQuery->lockForUpdate()->first();
+            $this->accountExist($withdrawDto->getAccountNumber());
+            $lockedAccount = $this->accountRepository->getAccountForUpdate($withdrawDto->getAccountNumber());
             $accountDto = AccountDto::fromModel($lockedAccount);
             if (!$this->userService->validatePin($accountDto->getUserId(), $withdrawDto->getPin())) {
                 throw new InvalidPinException();
@@ -154,7 +135,6 @@ class AccountService implements AccountServiceInterface
                 $this->transactionService->generateReference(),
                 $withdrawDto
             );
-
             event(new TransactionEvent($transactionDto, $accountDto, $lockedAccount));
             DB::commit();
             return $transactionDto;
@@ -172,16 +152,12 @@ class AccountService implements AccountServiceInterface
         $minimum_withdrawal = 300;
         try {
             DB::beginTransaction();
-            $senderAccountQuery = $this->modelQuery()->where('account_number', $senderAccountNumber);
-            $receiverAccountQuery = $this->modelQuery()->where('account_number', $receiverAccountNumber);
 
-            $this->accountExist($senderAccountQuery);
-            $this->accountExist($receiverAccountQuery);
+            $this->accountExist($senderAccountNumber);
+            $this->accountExist($receiverAccountNumber);
 
-            /** @var Account $lockedSenderAccount */
-            $lockedSenderAccount = $senderAccountQuery->lockForUpdate()->first();
-            /** @var Account $lockedReceiverAccount */
-            $lockedReceiverAccount = $receiverAccountQuery->lockForUpdate()->first();
+            $lockedSenderAccount = $this->accountRepository->getAccountForUpdate($senderAccountNumber);
+            $lockedReceiverAccount = $this->accountRepository->getAccountForUpdate($receiverAccountNumber);
             $lockedSenderAccountDto = AccountDto::fromModel($lockedSenderAccount);
             $lockedReceiverAccountDto = AccountDto::fromModel($lockedReceiverAccount);
 
@@ -250,9 +226,9 @@ class AccountService implements AccountServiceInterface
     /**
      * @throws InvalidAccountNumberException
      */
-    public function accountExist(Builder $accountQuery): void
+    public function accountExist(string $accountNumber): void
     {
-        if (!$accountQuery->exists()) {
+        if (!$this->accountRepository->accountExists($accountNumber)) {
             throw new InvalidAccountNumberException();
         }
     }

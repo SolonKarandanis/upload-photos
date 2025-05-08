@@ -11,9 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 class UserRepository implements UserRepositoryInterface
 {
 
+    public function modelQuery(): Builder
+    {
+        return User::query();
+    }
     public function createUser(UserDto $userDto): Builder|User
     {
-        return User::query()->create([
+        return $this->modelQuery()->create([
             'name' => $userDto->getName(),
             'email' => $userDto->getEmail(),
             'password' => $userDto->getPassword(),
@@ -23,16 +27,18 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserById(int $userId): Builder|User
     {
-        return User::query()->where('id', $userId)->first();
+        return $this->modelQuery()->where('id', $userId)->first();
     }
 
     public function getUsersWithPostCounts(): Builder|Collection
     {
-        return User::query()->withCount([
+        return $this->modelQuery()->withCount([
             'posts',
             'posts as laravel_posts_count' => function (Builder $query) {
                 $query->where('title', 'LIKE', '%laravel_posts_count%');
             }
         ])->get();
     }
+
+
 }

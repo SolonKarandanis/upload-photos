@@ -11,16 +11,14 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface TransactionServiceInterface
 {
-    public function modelQuery(): Builder;
-
     public function createTransaction(TransactionDto $transactionDto): Transaction;
 
     public function generateReference(): string;
 
     public function getTransactionByReference(string $reference): Transaction;
     public function getTransactionById(int $transactionID): Transaction;
-    public function getTransactionsByAccountNumber(int $accountNumber, Builder $builder): Builder;
-    public function getTransactionsByUserId(int $userID, Builder $builder): Builder;
+    public function getTransactionsByAccountNumber(int $accountNumber): Transaction;
+    public function getTransactionsByUserId(int $userID): Transaction;
 
     public function downloadTransactionHistory(AccountDto $accountDto, Carbon $fromDate, Carbon $endDate): Collection;
 }

@@ -7,6 +7,7 @@ use App\Dtos\TransactionDto;
 use App\Enums\TransactionCategoryEnum;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transaction;
+use App\Repositories\TransactionRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,12 +16,8 @@ use Illuminate\Support\Str;
 class TransactionService implements TransactionServiceInterface
 {
 
-    /**
-     * @return Builder
-     */
-    public function modelQuery(): Builder
-    {
-        return Transaction::query();
+    public function __construct(private readonly TransactionRepository $transactionRepository){
+
     }
 
     public function createTransaction(TransactionDto $transactionDto): Transaction
@@ -32,9 +29,7 @@ class TransactionService implements TransactionServiceInterface
         if ($transactionDto->getCategory() == TransactionCategoryEnum::WITHDRAWAL->value) {
             $data =$transactionDto->forWithdrawalToArray($transactionDto);
         }
-        /** @var Transaction $transaction */
-        $transaction = $this->modelQuery()->create($data);
-        return $transaction;
+        return $this->transactionRepository->createTransaction($data);
     }
 
     public function generateReference(): string
@@ -42,19 +37,14 @@ class TransactionService implements TransactionServiceInterface
         return Str::upper('TF' . '/' . Carbon::now()->getTimestampMs() . '/' . Str::random(4));
     }
 
-    public function updateTransactionBalance(string $reference, float|int $balance)
+    public function updateTransactionBalance(string $reference, float|int $balance):void
     {
-        $this->modelQuery()->where('reference', $reference)->update([
-            'balance' => $balance,
-            'confirmed' => true
-        ]);
+        $this->transactionRepository->updateBalance($reference, $balance);
     }
 
-    public function updateTransferID(string $reference, int $transferID)
+    public function updateTransferID(string $reference, int $transferID):void
     {
-        $this->modelQuery()->where('reference', $reference)->update([
-            'transfer_id' => $transferID
-        ]);
+        $this->transactionRepository->updateTransferID($reference, $transferID);
     }
 
     /**
@@ -62,8 +52,7 @@ class TransactionService implements TransactionServiceInterface
      */
     public function getTransactionByReference(string $reference): Transaction
     {
-        /** @var $transaction Transaction */
-        $transaction =  $this->modelQuery()->where('reference', $reference)->first();
+        $transaction =  $this->transactionRepository->getTransactionByReference($reference);
         if (!$transaction){
             throw new ANotFoundException("transaction with the supplied reference does not exist");
         }
@@ -75,25 +64,21 @@ class TransactionService implements TransactionServiceInterface
      */
     public function getTransactionById(int $transactionID): Transaction
     {
-        /** @var $transaction Transaction */
-        $transaction =  $this->modelQuery()->where('id', $transactionID)->first();
+        $transaction =  $this->transactionRepository->getTransactionById($transactionID);
         if (!$transaction){
             throw new ANotFoundException("transaction with the supplied id does not exist");
         }
         return $transaction;
     }
 
-    public function getTransactionsByAccountNumber(int $accountNumber, Builder $builder): Builder
+    public function getTransactionsByAccountNumber(int $accountNumber): Transaction
     {
-        /** @var $transaction Transaction */
-        return $builder->whereHas('account', function ($query) use ($accountNumber){
-            $query->where('account_number', $accountNumber);
-        });
+        return $this->transactionRepository->getTransactionsByAccountNumber($accountNumber);
     }
 
-    public function getTransactionsByUserId(int $userID, Builder $builder): Builder
+    public function getTransactionsByUserId(int $userID): Transaction
     {
-        return $builder->where('user_id', $userID);
+        return $this->transactionRepository->getTransactionsByUserId($userID);
     }
 
     public function downloadTransactionHistory(AccountDto $accountDto, Carbon $fromDate, Carbon $endDate): Collection

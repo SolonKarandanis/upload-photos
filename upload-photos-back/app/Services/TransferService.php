@@ -6,31 +6,18 @@ use App\Dtos\AccountDto;
 use App\Dtos\TransferDto;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transfer;
+use App\Repositories\TransferRepository;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class TransferService implements TransferServiceInterface
 {
 
-    public function modelQuery(): Builder
-    {
-        return Transfer::query();
-    }
+    public function __construct(private readonly TransferRepository $transferRepository){}
 
     public function createTransfer(TransferDto $transferDto): Transfer
     {
-        /** @var Transfer $transfer */
-        $transfer = $this->modelQuery()->create([
-            'sender_id' => $transferDto->getSenderId(),
-            'recipient_id' => $transferDto->getRecepientId(),
-            'sender_account_id' => $transferDto->getSenderAccountId(),
-            'recipient_account_id' => $transferDto->getRecepientAccountId(),
-            'reference' => $transferDto->getReference(),
-            'status' => $transferDto->getStatus(),
-            'amount' => $transferDto->getAmount(),
-        ]);
-        return $transfer;
+        return $this->transferRepository->createTransfer($transferDto);
     }
 
     public function getTransfersBetweenAccount(AccountDto $firstAccountDto, AccountDto $secondAccountDto): array
@@ -48,8 +35,7 @@ class TransferService implements TransferServiceInterface
      */
     public function getTransferById(int $transferId): Transfer
     {
-        /** @var Transfer $transfer */
-        $transfer = $this->modelQuery()->where('id', $transferId)->first();
+        $transfer = $this->transferRepository->getTransferById($transferId);
         if (!$transfer) {
             throw new ANotFoundException("Transfer not found");
         }
@@ -61,8 +47,7 @@ class TransferService implements TransferServiceInterface
      */
     public function getTransferByReference(string $reference): Transfer
     {
-        /** @var Transfer $transfer */
-        $transfer = $this->modelQuery()->where('reference', $reference)->first();
+        $transfer = $this->transferRepository->getTransferByReference($reference);
         if (!$transfer) {
             throw new ANotFoundException("Transfer  with supplier reference not found");
         }

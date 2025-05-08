@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface PostRepositoryInterface
 {
+    public function modelQuery(): Builder;
     public function getAllPosts():Collection;
 
     public function getPosts(string $query):Collection;

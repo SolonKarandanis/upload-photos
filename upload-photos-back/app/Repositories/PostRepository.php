@@ -11,16 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 class PostRepository implements PostRepositoryInterface
 {
 
+    public function modelQuery(): Builder
+    {
+        return Posts::query();
+    }
     public function getAllPosts(): Collection
     {
-        return Posts::query()
+        return $this->modelQuery()
             ->orderBy('id','desc')
             ->get();
     }
 
     public function getPosts(string $query): Collection
     {
-        $posts_query = Posts::query();
+        $posts_query = $this->modelQuery();
         if(!is_null($query)){
             return $posts_query->where('title','like','%'.$query.'%')
                 ->get();
@@ -30,7 +34,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function createPost(PostDto $postDto): Builder|Posts
     {
-        $post = Posts::query()->create([
+        $post = $this->modelQuery()->create([
             'title' => $postDto->getTitle(),
             'slug' => $postDto->getSlug(),
             'post_content' => $postDto->getPostConent(),
@@ -50,6 +54,6 @@ class PostRepository implements PostRepositoryInterface
 
     public function getPostById(int $id): Posts
     {
-        return Posts::query()->where('id', $id)->first();
+        return $this->modelQuery()->where('id', $id)->first();
     }
 }

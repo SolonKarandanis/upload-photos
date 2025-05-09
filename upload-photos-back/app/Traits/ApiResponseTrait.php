@@ -51,7 +51,7 @@ trait ApiResponseTrait
     public function apiResponse(array $data = [], int $statusCode = 200, array $headers = [])
     {
         $result = $this->parseGivenData($data, $statusCode, $headers);
-        return response()->json($result['content'], $result['statusCode'], $result['headers']);
+        return response()->json($result['content'], $result['statusCode'], $result['headers'],$statusCode);
     }
 
     public function sendSuccess(mixed $data, string $message = '')

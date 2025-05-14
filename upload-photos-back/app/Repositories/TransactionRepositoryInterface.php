@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 interface TransactionRepositoryInterface
 {
@@ -22,4 +23,10 @@ interface TransactionRepositoryInterface
     public function getTransactionsByAccountNumber(int $accountNumber): Transaction;
 
     public function getTransactionsByUserId(int $userID): Transaction;
+
+    public function getTransactionsByUserIds(array $userIds): Collection;
+
+    public function getTransactionsByCreatedAtBetween(string $createdAtFrom, string $createdAtTo): Collection;
+
+    public function restoreTransactionsByUserId(int $userID): void;
 }

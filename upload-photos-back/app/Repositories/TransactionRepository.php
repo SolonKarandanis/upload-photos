@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Transaction;
 use App\Repositories\TransactionRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class TransactionRepository implements TransactionRepositoryInterface
 {
@@ -54,5 +55,20 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function getTransactionsByUserId(int $userID): Transaction
     {
         return $this->modelQuery()->where('user_id', $userID);
+    }
+
+    public function getTransactionsByUserIds(array $userIds): Collection
+    {
+        return $this->modelQuery()->whereIntegerInRaw('user_id', $userIds)->get();
+    }
+
+    public function getTransactionsByCreatedAtBetween(string $createdAtFrom, string $createdAtTo): Collection
+    {
+        return $this->modelQuery()->whereBetween('created_at', [$createdAtFrom, $createdAtTo])->get();
+    }
+
+    public function restoreTransactionsByUserId(int $userID): void
+    {
+        Transaction::onlyTrashed()->where('user_id',$userID)->restore();
     }
 }

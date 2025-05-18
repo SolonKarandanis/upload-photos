@@ -6,14 +6,14 @@ use App\Dtos\AccountDto;
 use App\Dtos\TransferDto;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transfer;
-use App\Repositories\TransferRepository;
+use App\Repositories\TransferRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class TransferService implements TransferServiceInterface
 {
 
-    public function __construct(private readonly TransferRepository $transferRepository){}
+    public function __construct(private readonly TransferRepositoryInterface $transferRepository){}
 
     public function createTransfer(TransferDto $transferDto): Transfer
     {

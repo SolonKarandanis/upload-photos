@@ -4,18 +4,16 @@ namespace App\Services;
 
 use App\Dtos\PostDto;
 use App\Models\Posts;
-use App\Repositories\PostRepository;
-use App\Services\PostServiceInterface;
+use App\Repositories\PostRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class PostService implements PostServiceInterface
 {
 
-    public function __construct(private readonly PostRepository $postRepository)
+    public function __construct(private readonly PostRepositoryInterface $postRepository)
     {
     }
     public function getAllPosts(): Collection

@@ -7,7 +7,7 @@ use App\Dtos\TransactionDto;
 use App\Enums\TransactionCategoryEnum;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transaction;
-use App\Repositories\TransactionRepository;
+use App\Repositories\TransactionRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class TransactionService implements TransactionServiceInterface
 {
 
-    public function __construct(private readonly TransactionRepository $transactionRepository){
+    public function __construct(private readonly TransactionRepositoryInterface $transactionRepository){
 
     }
 

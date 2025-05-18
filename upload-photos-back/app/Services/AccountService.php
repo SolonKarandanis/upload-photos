@@ -18,17 +18,17 @@ use App\Exceptions\InvalidPinException;
 use App\Exceptions\PinNotSetException;
 use App\Exceptions\WithdrawalAmountTooLowException;
 use App\Models\Account;
-use App\Repositories\AccountRepository;
+use App\Repositories\AccountRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class AccountService implements AccountServiceInterface
 {
 
     public function __construct(
-        private readonly UserService $userService,
-        private readonly TransactionService $transactionService,
-        private readonly TransferService $transferService,
-        private readonly AccountRepository $accountRepository,
+        private readonly UserServiceInterface $userService,
+        private readonly TransactionServiceInterface $transactionService,
+        private readonly TransferServiceInterface $transferService,
+        private readonly AccountRepositoryInterface $accountRepository,
     )
     {
     }

@@ -7,7 +7,7 @@ use App\Exceptions\InvalidPinLengthException;
 use App\Exceptions\PinHasAlreadyBeenSetException;
 use App\Exceptions\PinNotSetException;
 use App\Models\User;
-use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 class UserService implements UserServiceInterface
 {
 
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepositoryInterface $userRepository)
     {
     }
 

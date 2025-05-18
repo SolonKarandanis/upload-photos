@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Solon Karandanis',
-            'email' => 'skarandanis@gmail.com',
+            'name' => 'Stratos Karandanis',
+            'email' => 'skarandanis3@gmail.com',
             'password'=> '7ujm&UJM',
         ]);
 

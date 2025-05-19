@@ -19,7 +19,7 @@ class TransactionController extends Controller
                 $end_date = $request->query('end_date');
                 $query->whereDate('date', '>=', $start_date)->whereDate('date','<=', $end_date);
             });
-        $transactionBuilder =  $this->transactionService->getTransactionsByUserId($user->id, $transactionBuilder);
+        $transactionBuilder =  $this->transactionService->getTransactionsByUserId($user->id);
         return $this->sendSuccess(['transactions' => $transactionBuilder->paginate($request->query('per_page', 15))]);
     }
 }

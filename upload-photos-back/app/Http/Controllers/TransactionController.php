@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dtos\TransactionFilterDTO;
 use App\Http\Requests\Account\FilterTransactionsRequest;
 use App\Services\TransactionService;
 
@@ -12,6 +13,8 @@ class TransactionController extends Controller
     }
     public function index(FilterTransactionsRequest $request){
         $user = $request->user();
+        $filter = new TransactionFilterDTO();
+        $query = $filter->transform($request);
         $transactionBuilder = $this->transactionService->modelQuery()
             ->when($request->query('category'), function ($query, $category){
                 $query->where('category', $category);

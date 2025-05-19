@@ -75,9 +75,9 @@ class TransactionService implements TransactionServiceInterface
         return $this->transactionRepository->getTransactionsByAccountNumber($accountNumber);
     }
 
-    public function getTransactionsByUserId(int $userID): Transaction
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection
     {
-        return $this->transactionRepository->getTransactionsByUserId($userID);
+        return $this->transactionRepository->getTransactionsByUserIdAndFilter($userID, $filter);
     }
 
     public function downloadTransactionHistory(AccountDto $accountDto, Carbon $fromDate, Carbon $endDate): Collection

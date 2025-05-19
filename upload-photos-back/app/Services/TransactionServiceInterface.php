@@ -18,7 +18,7 @@ interface TransactionServiceInterface
     public function getTransactionByReference(string $reference): Transaction;
     public function getTransactionById(int $transactionID): Transaction;
     public function getTransactionsByAccountNumber(int $accountNumber): Transaction;
-    public function getTransactionsByUserId(int $userID): Transaction;
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection;
 
     public function downloadTransactionHistory(AccountDto $accountDto, Carbon $fromDate, Carbon $endDate): Collection;
 }

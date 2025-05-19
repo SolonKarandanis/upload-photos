@@ -22,7 +22,7 @@ interface TransactionRepositoryInterface
 
     public function getTransactionsByAccountNumber(int $accountNumber): Transaction;
 
-    public function getTransactionsByUserId(int $userID): Transaction;
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection;
 
     public function getTransactionsByUserIds(array $userIds): Collection;
 

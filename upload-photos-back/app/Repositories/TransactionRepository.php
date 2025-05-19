@@ -52,7 +52,7 @@ class TransactionRepository implements TransactionRepositoryInterface
         })->first();
     }
 
-    public function getTransactionsByUserId(int $userID): Transaction
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection
     {
         return $this->modelQuery()->where('user_id', $userID);
     }

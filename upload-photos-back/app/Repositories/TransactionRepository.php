@@ -60,15 +60,15 @@ class TransactionRepository implements TransactionRepositoryInterface
             ->where('user_id', $userID)
             ->where($filter)
             ->paginate(perPage: $pageRequest->getLimit(), page: $pageRequest->getPage());
+    }
 
-//        $transactionBuilder = $this->transactionService->modelQuery()
+    //        $transactionBuilder = $this->transactionService->modelQuery()
 //            ->when($request->query('category'), function ($query, $category){
 //                $query->where('category', $category);
 //            })->when($request->query('start_date'), function ($query, $start_date) use ($request){
 //                $end_date = $request->query('end_date');
 //                $query->whereDate('date', '>=', $start_date)->whereDate('date','<=', $end_date);
 //            });
-    }
 
     public function getTransactionsByUserIds(array $userIds): Collection
     {

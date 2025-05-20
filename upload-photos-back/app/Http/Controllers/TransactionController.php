@@ -17,7 +17,7 @@ class TransactionController extends Controller
         $filter = new TransactionFilterDTO();
         $query = $filter->transform($request);
         $pageRequest = new PageRequestDTO($request->query('page'), $request->query('limit'));
-        $transactionBuilder =  $this->transactionService->getTransactionsByUserId($user->id);
-        return $this->sendSuccess(['transactions' => $transactionBuilder->paginate($request->query('per_page', 15))]);
+        $result =  $this->transactionService->getTransactionsByUserIdAndFilter($user->id,$query,$pageRequest);
+        return $this->sendSuccess(['transactions' => $result]);
     }
 }

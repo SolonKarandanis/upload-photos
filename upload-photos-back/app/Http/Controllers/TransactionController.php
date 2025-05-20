@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dtos\PageRequestDTO;
 use App\Dtos\TransactionFilterDTO;
 use App\Http\Requests\Account\FilterTransactionsRequest;
 use App\Services\TransactionService;
@@ -15,6 +16,7 @@ class TransactionController extends Controller
         $user = $request->user();
         $filter = new TransactionFilterDTO();
         $query = $filter->transform($request);
+        $pageRequest = new PageRequestDTO($request->query('page'), $request->query('limit'));
         $transactionBuilder =  $this->transactionService->getTransactionsByUserId($user->id);
         return $this->sendSuccess(['transactions' => $transactionBuilder->paginate($request->query('per_page', 15))]);
     }

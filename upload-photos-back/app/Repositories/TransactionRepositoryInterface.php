@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Dtos\PageRequestDTO;
 use App\Models\Transaction;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,7 +24,7 @@ interface TransactionRepositoryInterface
 
     public function getTransactionsByAccountNumber(int $accountNumber): Transaction;
 
-    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection;
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter, PageRequestDTO $pageRequest): LengthAwarePaginator;
 
     public function getTransactionsByUserIds(array $userIds): Collection;
 

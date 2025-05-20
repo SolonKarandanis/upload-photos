@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Dtos\PageRequestDTO;
 use App\Models\Transaction;
 use App\Repositories\TransactionRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -52,9 +54,12 @@ class TransactionRepository implements TransactionRepositoryInterface
         })->first();
     }
 
-    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter, PageRequestDTO $pageRequest): LengthAwarePaginator
     {
-        return $this->modelQuery()->where('user_id', $userID)->where($filter);
+        return $this->modelQuery()
+            ->where('user_id', $userID)
+            ->where($filter)
+            ->paginate(perPage: $pageRequest->getLimit(), page: $pageRequest->getPage());
 
 //        $transactionBuilder = $this->transactionService->modelQuery()
 //            ->when($request->query('category'), function ($query, $category){

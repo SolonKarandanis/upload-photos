@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Dtos\AccountDto;
+use App\Dtos\PageRequestDTO;
 use App\Dtos\TransactionDto;
 use App\Enums\TransactionCategoryEnum;
 use App\Exceptions\ANotFoundException;
 use App\Models\Transaction;
 use App\Repositories\TransactionRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
@@ -75,9 +77,9 @@ class TransactionService implements TransactionServiceInterface
         return $this->transactionRepository->getTransactionsByAccountNumber($accountNumber);
     }
 
-    public function getTransactionsByUserIdAndFilter(int $userID,array $filter): Collection
+    public function getTransactionsByUserIdAndFilter(int $userID,array $filter,PageRequestDTO $pageRequest): LengthAwarePaginator
     {
-        return $this->transactionRepository->getTransactionsByUserIdAndFilter($userID, $filter);
+        return $this->transactionRepository->getTransactionsByUserIdAndFilter($userID, $filter,$pageRequest);
     }
 
     public function downloadTransactionHistory(AccountDto $accountDto, Carbon $fromDate, Carbon $endDate): Collection

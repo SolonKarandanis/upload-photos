@@ -85,4 +85,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Car::class,'favourite_cars','user_id','car_id');
     }
+
+    //User::withLastTransaction()
+    public function scopeWithLastTransaction($query){
+        $query->addSubSelect('latest_transaction', function($query){
+            $query->select('created_at')
+            ->from('transactions')
+            ->whereColumn('user_id', 'users.id')
+            ->lateset('created_at')
+            ->limit(1);
+        });
+    }
 }

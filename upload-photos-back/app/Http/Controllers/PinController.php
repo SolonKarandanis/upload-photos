@@ -6,14 +6,14 @@ use App\Exceptions\InvalidPinLengthException;
 use App\Exceptions\PinHasAlreadyBeenSetException;
 use App\Exceptions\PinNotSetException;
 use App\Models\User;
-use App\Services\UserService;
+use App\Services\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class PinController extends Controller
 {
-   public function __construct(private readonly UserService $userService)
+   public function __construct(private readonly UserServiceInterface $userService)
    {
    }
 

@@ -7,13 +7,13 @@ use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Http\Resources\PostListResource;
 use App\Http\Resources\PostResource;
-use App\Services\PostService;
+use App\Services\PostServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
-    public function __construct(private readonly PostService $postService){
+    public function __construct(private readonly PostServiceInterface $postService){
         $this->middleware('verifyCategoriesCount')->only(['store']);
     }
     public function loadMorePosts()

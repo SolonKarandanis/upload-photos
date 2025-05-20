@@ -8,14 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Resources\UserResource;
-use App\Services\UserService;
+use App\Services\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
-    public function __construct(private readonly UserService $userService)
+    public function __construct(private readonly UserServiceInterface $userService)
     {
     }
 

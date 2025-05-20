@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Dtos\PageRequestDTO;
 use App\Dtos\TransactionFilterDTO;
 use App\Http\Requests\Account\FilterTransactionsRequest;
-use App\Services\TransactionService;
+use App\Services\TransactionServiceInterface;
 
 class TransactionController extends Controller
 {
-    public function __construct(private readonly TransactionService $transactionService)
+    public function __construct(private readonly TransactionServiceInterface $transactionService)
     {
     }
     public function index(FilterTransactionsRequest $request){

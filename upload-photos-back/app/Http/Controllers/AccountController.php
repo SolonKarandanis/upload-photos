@@ -13,13 +13,13 @@ use App\Exceptions\InvalidPinException;
 use App\Http\Requests\Account\DepositRequest;
 use App\Http\Requests\Account\TransferRequest;
 use App\Http\Requests\Account\WithdrawRequest;
-use App\Services\AccountService;
+use App\Services\AccountServiceInterface;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
 
-    public function __construct(private readonly AccountService $accountService)
+    public function __construct(private readonly AccountServiceInterface $accountService)
     {
     }
 

@@ -12,7 +12,8 @@ class RegisterUserRequest extends FormRequest
             'name' => ['required', 'string', 'min:2', 'max:200'],
             'email' => ['required', 'email', 'max:200', 'unique:users'],
             'password' => ['required', 'string', 'max:200'],
-            'phoneNumber' => ['required', 'string', 'min:10', 'max:20', 'unique:users']
+            'phoneNumber' => ['required', 'string', 'min:10', 'max:20', 'unique:users'],
+            'pin' => ['required', 'numeric', 'digits:4', 'unique:users'],
         ];
     }
 

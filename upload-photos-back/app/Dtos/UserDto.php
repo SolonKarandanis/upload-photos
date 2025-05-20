@@ -29,6 +29,7 @@ class UserDto implements DtoInterface
         $userDto->setEmail($request->input('email'));
         $userDto->setPassword($request->input('password'));
         $userDto->setPhoneNumber($request->input('phoneNumber'));
+        $userDto->setPin($request->input('pin'));
         return $userDto;
     }
 

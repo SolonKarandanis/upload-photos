@@ -37,33 +37,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function id(){
-        return $this->attributes['id'];
-    }
-
-    public function name(){
-        return $this->attributes['name'];
-    }
-
-    public function email(){
-        return $this->attributes['email'];
-    }
-
-    public function createdAt(){
-        return $this->attributes['created_at'];
-    }
-
-    public function updatedAt(){
-        return $this->attributes['updated_at'];
-    }
-
-    public function phoneNumber(){
-        return $this->attributes['phone_number'];
-    }
-
-    public function pin(){
-        return $this->attributes['pin'];
-    }
 
     /**
      * Get the attributes that should be cast.

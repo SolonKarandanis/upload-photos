@@ -22,6 +22,7 @@ class UserRepository implements UserRepositoryInterface
             'email' => $userDto->getEmail(),
             'password' => $userDto->getPassword(),
             'phone_number' => $userDto->getPhoneNumber(),
+            'pin' => $userDto->getPin(),
         ]);
     }
 

@@ -11,6 +11,7 @@
       <excludeFolder url="file://$MODULE_DIR$/upload-photos-back/vendor/barryvdh/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/upload-photos-back/storage/app" />
       <excludeFolder url="file://$MODULE_DIR$/upload-photos-back/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/upload-photos-back/vendor/_laravel_idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

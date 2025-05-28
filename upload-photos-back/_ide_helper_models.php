@@ -322,10 +322,10 @@ namespace App\Models{
  * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $created_by
+ * @property int|null $created_by
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Categories> $categories
  * @property-read int|null $categories_count
- * @property-read \App\Models\User $createdBy
+ * @property-read \App\Models\User|null $createdBy
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts query()
@@ -459,6 +459,10 @@ namespace App\Models{
  * @property string|null $phone_number
  * @property string|null $pin
  * @property-read \App\Models\Account|null $account
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+ * @property-read int|null $cars_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $favouriteCars
+ * @property-read int|null $favourite_cars_count
  * @property-read \App\Models\Posts|null $latestPost
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -484,6 +488,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withLastTransaction()
  */
 	class User extends \Eloquent {}
 }

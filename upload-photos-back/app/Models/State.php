@@ -6,6 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+ * @property-read int|null $cars_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\City> $cities
+ * @property-read int|null $cities_count
+ * @method static \Database\Factories\StateFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|State newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|State newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|State query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereName($value)
+ * @mixin \Eloquent
+ */
 class State extends Model
 {
     use HasFactory;

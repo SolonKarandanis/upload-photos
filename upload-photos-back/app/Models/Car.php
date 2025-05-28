@@ -11,6 +11,66 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $maker_id
+ * @property int $model_id
+ * @property int $year
+ * @property int $price
+ * @property int $mileage
+ * @property string $vin
+ * @property int $car_type_id
+ * @property int $fuel_type_id
+ * @property int $user_id
+ * @property int $city_id
+ * @property string|null $phone
+ * @property string|null $address
+ * @property string|null $description
+ * @property string|null $published_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\CarType $carType
+ * @property-read \App\Models\City $city
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $favouredUsers
+ * @property-read int|null $favoured_users_count
+ * @property-read \App\Models\CarFeatures|null $features
+ * @property-read \App\Models\FuelType $fuelType
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarImage> $images
+ * @property-read int|null $images_count
+ * @property-read \App\Models\Maker $maker
+ * @property-read \App\Models\CarModel $model
+ * @property-read \App\Models\User $owner
+ * @property-read \App\Models\CarImage|null $primaryImage
+ * @method static \Database\Factories\CarFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereCarTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereCityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereFuelTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereMakerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereMileage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereModelId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereVin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Car withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Car extends EloquentModel
 {
     use HasFactory, SoftDeletes;

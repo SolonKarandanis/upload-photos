@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $post_content
+ * @property string|null $image
+ * @property string $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $created_by
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Categories> $categories
+ * @property-read int|null $categories_count
+ * @property-read \App\Models\User|null $createdBy
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts wherePostContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Posts whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Posts extends Model
 {
     use HasFactory;

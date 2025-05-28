@@ -7,6 +7,29 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $path
+ * @property string|null $label
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Image extends Model
 {
     use SoftDeletes, Prunable;

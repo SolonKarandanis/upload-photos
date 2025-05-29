@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Posts> $posts
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Posts> $posts
  * @property-read int|null $posts_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Categories newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Categories newQuery()
@@ -21,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Categories whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Categories whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Categories whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Categories extends Model
 {

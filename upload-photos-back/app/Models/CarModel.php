@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $maker_id
  * @property string $name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+ * @property-read Collection<int, Car> $cars
  * @property-read int|null $cars_count
- * @property-read \App\Models\Maker $maker
+ * @property-read Maker $maker
  * @method static \Database\Factories\CarModelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarModel newQuery()

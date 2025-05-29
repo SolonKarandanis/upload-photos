@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $maker_id
@@ -32,18 +33,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\CarType $carType
- * @property-read \App\Models\City $city
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $favouredUsers
+ * @property-read CarType $carType
+ * @property-read City $city
+ * @property-read Collection<int, User> $favouredUsers
  * @property-read int|null $favoured_users_count
- * @property-read \App\Models\CarFeatures|null $features
- * @property-read \App\Models\FuelType $fuelType
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarImage> $images
+ * @property-read CarFeatures|null $features
+ * @property-read FuelType $fuelType
+ * @property-read Collection<int, CarImage> $images
  * @property-read int|null $images_count
- * @property-read \App\Models\Maker $maker
- * @property-read \App\Models\CarModel $model
- * @property-read \App\Models\User $owner
- * @property-read \App\Models\CarImage|null $primaryImage
+ * @property-read Maker $maker
+ * @property-read CarModel $model
+ * @property-read User $owner
+ * @property-read CarImage|null $primaryImage
  * @method static \Database\Factories\CarFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Car newQuery()

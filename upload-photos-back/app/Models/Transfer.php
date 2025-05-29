@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int|null $sender_id
@@ -18,12 +20,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property string $amount
  * @property string|null $deleted_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User|null $recipient
- * @property-read \App\Models\Account|null $recipientAccount
- * @property-read \App\Models\User|null $sender
- * @property-read \App\Models\Account|null $senderAccount
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User|null $recipient
+ * @property-read Account|null $recipientAccount
+ * @property-read User|null $sender
+ * @property-read Account|null $senderAccount
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer query()
@@ -38,7 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereSenderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Transfer extends Model
 {

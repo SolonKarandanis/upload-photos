@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $car_id
  * @property string $image_path
  * @property int $position
- * @property-read \App\Models\Car $car
+ * @property-read Car $car
  * @method static \Database\Factories\CarImageFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarImage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarImage newQuery()
@@ -36,7 +36,7 @@ class CarImage extends Model
         'position',
     ];
 
-    public function car():BelongsTo 
+    public function car():BelongsTo
     {
         return $this->belongsTo(Car::class,'car_id');
     }

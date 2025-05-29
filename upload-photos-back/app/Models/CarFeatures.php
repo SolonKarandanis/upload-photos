@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $car_id
  * @property int $abs
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $climate_control
  * @property int $rear_parking_sensors
  * @property int $leather_seats
- * @property-read \App\Models\Car|null $car
+ * @property-read Car|null $car
  * @method static \Database\Factories\CarFeaturesFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarFeatures newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CarFeatures newQuery()

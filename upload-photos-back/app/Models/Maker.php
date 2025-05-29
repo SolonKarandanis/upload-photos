@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+ * @property-read Collection<int, Car> $cars
  * @property-read int|null $cars_count
  * @property-read Maker|null $maker
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarModel> $models
+ * @property-read Collection<int, CarModel> $models
  * @property-read int|null $models_count
  * @method static \Database\Factories\MakerFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Maker newModelQuery()
@@ -21,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Maker query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Maker whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Maker whereName($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Maker extends CarModel
 {

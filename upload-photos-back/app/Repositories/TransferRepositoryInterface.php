@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface TransferRepositoryInterface
 {
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder|Transfer;
 
     public function createTransfer(TransferDto $transferDto): Transfer;
 

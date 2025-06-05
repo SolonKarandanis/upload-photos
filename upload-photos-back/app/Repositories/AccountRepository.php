@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class AccountRepository implements AccountRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|Account
     {
         return Account::query();
     }

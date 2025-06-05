@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface AccountRepositoryInterface
 {
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder|Account;
 
     public function hasAccountNumber(int $userId): bool;
 

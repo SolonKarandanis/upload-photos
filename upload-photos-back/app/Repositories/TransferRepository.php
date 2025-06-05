@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 class TransferRepository implements TransferRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|Transfer
     {
         return Transfer::query();
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class CarFeaturesRepository implements CarFeaturesRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|CarFeatures
     {
         return CarFeatures::query();
     }

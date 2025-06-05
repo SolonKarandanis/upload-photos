@@ -11,7 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CarRepository implements CarRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|Car
     {
        return Car::query();
     }

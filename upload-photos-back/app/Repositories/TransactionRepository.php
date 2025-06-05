@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 class TransactionRepository implements TransactionRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|Transaction
     {
         return Transaction::query();
     }

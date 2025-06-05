@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 interface UserRepositoryInterface
 {
 
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder| User;
     public function  createUser(UserDto  $userDto): Builder |User;
     public function  getUserById(int $userId): Builder|User;
 

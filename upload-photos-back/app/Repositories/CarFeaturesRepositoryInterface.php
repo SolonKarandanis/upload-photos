@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface CarFeaturesRepositoryInterface
 {
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder|CarFeatures;
 
     /**
      * @param array $attributes

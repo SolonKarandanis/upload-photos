@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CarRepositoryInterface
 {
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder|Car;
 
     /**
      * @param array $attributes

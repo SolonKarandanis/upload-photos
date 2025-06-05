@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRepository implements UserRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder| User
     {
         return User::query();
     }

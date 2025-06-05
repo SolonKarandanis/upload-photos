@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class PostRepository implements PostRepositoryInterface
 {
 
-    public function modelQuery(): Builder
+    public function modelQuery(): Builder|Posts
     {
         return Posts::query();
     }

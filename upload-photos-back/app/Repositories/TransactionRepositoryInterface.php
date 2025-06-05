@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface TransactionRepositoryInterface
 {
-    public function modelQuery(): Builder;
+    public function modelQuery(): Builder|Transaction;
 
     public function createTransaction(array $data): Transaction;
 

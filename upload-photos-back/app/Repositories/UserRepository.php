@@ -42,4 +42,10 @@ class UserRepository implements UserRepositoryInterface
     }
 
 
+    public function getUserWithSumOfFavouriteCars(int $userId): Builder|Collection
+    {
+        return $this->modelQuery()
+            ->withSum('favouriteCars','$price')
+            ->get();
+    }
 }

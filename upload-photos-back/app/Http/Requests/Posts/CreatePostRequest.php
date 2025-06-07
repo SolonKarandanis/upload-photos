@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreatePostRequest extends FormRequest
 {
@@ -28,4 +29,12 @@ class CreatePostRequest extends FormRequest
             'categories.*'=>['required','integer','exists:categories,id'],
         ];
     }
+
+    public function validated($key = null, $default = null)
+    {
+        return array_merge(parent::validated(), [
+            'created_by' => Auth::user()->id,
+        ]);
+    }
+
 }

@@ -28,7 +28,7 @@ class PostDto implements DtoInterface
         $postDto->setTitle($title);
         $postDto->slug=self::generateSlug($title);
         $postDto->setPostConent($request->get('postContent'));
-        $postDto->setCreatedBy($request->user()->id);
+        $postDto->setCreatedBy($request->get('created_by'));
         $postDto->setImage($request->file('image'));
         $categories_array=json_decode($request->categories);
         $postDto->setCategories($categories_array);

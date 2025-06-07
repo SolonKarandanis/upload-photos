@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50',Rule::unique('categories')->ignore($this->route('category')->id)],
+            'name' => ['required', 'string', 'max:50',Rule::unique('categories')->ignore($this->category->id)],
         ];
     }
 

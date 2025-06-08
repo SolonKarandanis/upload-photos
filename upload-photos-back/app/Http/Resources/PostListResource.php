@@ -16,11 +16,12 @@ class PostListResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id'=>$this->id,
             'title'=>$this->title,
             'postContent'=>$this->post_content,
-            'categories'=> $this->categories->map(fn($category) => new CategoryResource($category),true),
+            'categories'=> $this->categories->map(fn($category) => CategoryResource::make($this->whenLoaded('categories')),true),
             'slug'=>$this->slug,
             'image' => url(Storage::url($this->image)),
         ];

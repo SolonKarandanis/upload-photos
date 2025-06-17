@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Dtos\PageRequestDTO;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Repositories\TransactionRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -83,5 +84,13 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function restoreTransactionsByUserId(int $userID): void
     {
         Transaction::onlyTrashed()->where('user_id',$userID)->restore();
+    }
+
+    public function getTransationsOrderedByUsername(): Collection
+    {
+        return $this->modelQuery()->select(['transactions.*', 'users.name as user_name'])
+            ->join('users', 'users.id', '=', 'transactions.user_id')
+            ->orderBy('users.name' )
+            ->get();
     }
 }

@@ -31,4 +31,6 @@ interface TransactionRepositoryInterface
     public function getTransactionsByCreatedAtBetween(string $createdAtFrom, string $createdAtTo): Collection;
 
     public function restoreTransactionsByUserId(int $userID): void;
+
+    public function getTransationsOrderedByUsername(): Collection;
 }

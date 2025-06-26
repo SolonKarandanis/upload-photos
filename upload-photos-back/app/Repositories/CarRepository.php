@@ -76,7 +76,7 @@ class CarRepository implements CarRepositoryInterface
     {
         $query = $this->modelQuery()->where('published_at','<',now());
         if($withRelations){
-            $query -> with('city','maker','model','carType','fuelType','primaryImage');
+            $query -> with(['city','maker','model','carType','fuelType','primaryImage']);
         }
 
         return $query->orderBy('published_at','desc')
@@ -91,7 +91,7 @@ class CarRepository implements CarRepositoryInterface
     {
         return $this->modelQuery()->where('user_id','=',$id)
             ->orderBy('created_at','desc')
-            ->with('city','maker','model','carType','fuelType','primaryImage')
+            ->with(['city','maker','model','carType','fuelType','primaryImage'])
             ->paginate($paginate);
     }
 

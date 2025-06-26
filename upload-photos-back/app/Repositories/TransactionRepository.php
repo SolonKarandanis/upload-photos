@@ -50,9 +50,7 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     public function getTransactionsByAccountNumber(int $accountNumber): Transaction
     {
-        return $this->modelQuery()->whereHas('account', function ($query) use ($accountNumber){
-            $query->where('account_number', $accountNumber);
-        })->first();
+        return $this->modelQuery()->whereRelation('account','account_number',$accountNumber )->first();
     }
 
     public function getTransactionsByUserIdAndFilter(int $userID,array $filter, PageRequestDTO $pageRequest): LengthAwarePaginator

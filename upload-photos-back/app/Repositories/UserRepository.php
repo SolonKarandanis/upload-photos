@@ -28,7 +28,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserById(int $userId): Builder|User
     {
-        return $this->modelQuery()->whereId('id', $userId);
+        return $this->modelQuery()->whereId('id', $userId)->first();
     }
 
     public function getUsersWithPostCounts(): Builder|Collection

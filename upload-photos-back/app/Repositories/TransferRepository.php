@@ -30,7 +30,7 @@ class TransferRepository implements TransferRepositoryInterface
 
     public function getTransferById(int $transferId): Transfer
     {
-        return $this->modelQuery()->whereId('id', $transferId)->first();
+        return $this->modelQuery()->whereId($transferId)->first();
     }
 
     public function getTransferByReference(string $reference): Transfer

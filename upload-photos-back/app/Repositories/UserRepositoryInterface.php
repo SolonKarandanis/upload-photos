@@ -18,4 +18,6 @@ interface UserRepositoryInterface
     public function getUsersWithPostCounts():Builder| Collection;
 
     public function getUserWithSumOfFavouriteCars(int $userId): Builder|Collection;
+
+    public function search(string $query): Builder|Collection;
 }

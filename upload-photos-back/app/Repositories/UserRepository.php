@@ -48,4 +48,11 @@ class UserRepository implements UserRepositoryInterface
             ->withSum('favouriteCars','$price')
             ->get();
     }
+
+    public function search(string $query): Builder|Collection
+    {
+        return $this->modelQuery()
+            ->whereAny(['name','email'],'like', '%' . $query . '%')
+            ->get();
+    }
 }

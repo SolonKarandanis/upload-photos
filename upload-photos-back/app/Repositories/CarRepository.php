@@ -74,12 +74,12 @@ class CarRepository implements CarRepositoryInterface
      */
     public function findPubllishedCars(bool $withRelations): Collection
     {
-        $query = $this->modelQuery()->where('published_at','<',now());
-        if($withRelations){
-            $query -> with(['city','maker','model','carType','fuelType','primaryImage']);
-        }
-
-        return $query->orderBy('published_at','desc')
+        return $this->modelQuery()
+            ->where('published_at','<',now())
+            ->when($withRelations, function (Builder $query) {
+                return $query->with(['city','maker','model','carType','fuelType','primaryImage']);
+            })
+            ->orderBy('published_at','desc')
             -> limit(30)
             -> get();
     }
@@ -132,42 +132,42 @@ class CarRepository implements CarRepositoryInterface
 
         foreach ($keys as $key) {
             $value = $params[$key];
-            if($key == 'maker_id' && !is_null($value)){
-                $query->where('cars.maker_id','=',$value);
-            }
-            if($key == 'model_id' && !is_null($value)){
-                $query->where('cars.model_id','=',$value);
-            }
-            if($key == 'state_id' && !is_null($value)){
-                $query->join('cities','cities.id','=','cars.city_id')
+            $query->when($key == 'maker_id' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.maker_id','=',$value);
+            });
+            $query->when($key == 'model_id' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.model_id','=',$value);
+            });
+            $query->when($key == 'state_id' && !is_null($value), function ($query) use ($value) {
+                return $query->join('cities','cities.id','=','cars.city_id')
                     ->where('cities.state_id','=',$value);
-            }
-            if($key == 'city_id' && !is_null($value)){
-                $query->where('cars.city_id','=',$value);
-            }
-            if($key == 'car_type_id' && !is_null($value)){
-                $query->where('cars.car_type_id','=',$value);
-            }
-            if($key == 'fuel_type_id' && !is_null($value)){
-                $query->where('cars.fuel_type_id','=',$value);
-            }
-            if($key == 'year_from' && !is_null($value)){
+            });
+            $query->when($key == 'city_id' && !is_null($value), function ($query) use ($value) {
+               return $query->where('cars.city_id','=',$value);
+            });
+            $query->when($key == 'car_type_id' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.car_type_id','=',$value);
+            });
+            $query->when($key == 'fuel_type_id' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.fuel_type_id','=',$value);
+            });
+            $query->when($key == 'year_from' && !is_null($value), function ($query) use ($value) {
 //                $startDate = Carbon::createFromFormat('Y-m-d', $value);
-                $query->where('cars.year','>=',$value);
-            }
-            if($key == 'year_to' && !is_null($value)){
+                return $query->where('cars.year','>=',$value);
+            });
+            $query->when($key == 'year_to' && !is_null($value), function ($query) use ($value) {
 //                $endDate = Carbon::createFromFormat('Y-m-d', $value);
-                $query->where('cars.year','<=',$value);
-            }
-            if($key == 'price_from' && !is_null($value)){
-                $query->where('cars.price','>=',$value);
-            }
-            if($key == 'price_to' && !is_null($value)){
-                $query->where('cars.price','<=',$value);
-            }
-            if($key == 'mileage' && !is_null($value)){
-                $query->where('cars.mileage','<=',$value);
-            }
+                return $query->where('cars.year','<=',$value);
+            });
+            $query->when($key == 'price_from' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.price','>=',$value);
+            });
+            $query->when($key == 'price_to' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.price','<=',$value);
+            });
+            $query->when($key == 'mileage' && !is_null($value), function ($query) use ($value) {
+                return $query->where('cars.mileage','<=',$value);
+            });
             if($key == 'sort' && !is_null($value)){
                 if($value=='price'){
                     $query->reorder()->orderBy('cars.price', 'asc');
